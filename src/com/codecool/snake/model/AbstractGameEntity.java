@@ -52,5 +52,11 @@ public class AbstractGameEntity {
         //TODO
     }
 
+    public void setGameEntityType(GameEntityType type){
+        entityType = type;
+    }
 
+    public GameEntityType getGameEntityType(){
+        return entityType;
+    }
 }
