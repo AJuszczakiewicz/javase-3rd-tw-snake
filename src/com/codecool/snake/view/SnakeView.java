@@ -11,7 +11,8 @@ public class SnakeView extends ImageView implements EntityObserver {
     private Image tail;
 
     public SnakeView(Image costumForHead, Image costumForTail){
-        //TODO
+        this.head = costumForHead;
+        this.tail = costumForTail;
     }
 
     @Override

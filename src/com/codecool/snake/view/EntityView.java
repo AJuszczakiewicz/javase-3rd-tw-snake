@@ -11,7 +11,7 @@ public class EntityView extends ImageView implements EntityObserver {
     private Image head;
 
     public EntityView(Image costumForHead){
-        //TODO
+        this.head = costumForHead;
     }
 
     @Override
