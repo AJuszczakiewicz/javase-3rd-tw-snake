@@ -1,5 +1,6 @@
 package com.codecool.snake.model;
 
+import com.codecool.snake.common.GameEntityType;
 import javafx.scene.input.KeyEvent;
 
 import java.util.HashMap;
@@ -11,11 +12,14 @@ public class SnakeEntity extends AbstractGameEntity {
     private Direction turnDirection;
 
     public SnakeEntity(int initialSize) {
-        //TODO
+        super();
+        this.setEntityType(GameEntityType.SNAKE);
+
+
     }
 
     public void setControl(HashMap<KeyEvent, Direction> control) {
-        //TODO
+        this.control = control;
     }
 
     public boolean isCollideWith(AbstractGameEntity collider) {
@@ -23,7 +27,7 @@ public class SnakeEntity extends AbstractGameEntity {
     }
 
     public void interactWith(AbstractGameEntity otherGameObject) {
-        //TODO
+
     }
 
     public void interpretEvent(KeyEvent event) {
@@ -41,11 +45,6 @@ public class SnakeEntity extends AbstractGameEntity {
     public void movement() {
         //TODO
     }
-
-    public void death() {
-        //TODO
-    }
-
 
 
 }
