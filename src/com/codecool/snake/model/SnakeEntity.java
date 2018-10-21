@@ -19,8 +19,7 @@ public class SnakeEntity extends AbstractGameEntity {
     }
 
     public boolean isCollideWith(AbstractGameEntity collider) {
-        //TODO
-        return false;
+        return collider.getBounds().intersectWith(this.getBounds());
     }
 
     public void interactWith(AbstractGameEntity otherGameObject) {

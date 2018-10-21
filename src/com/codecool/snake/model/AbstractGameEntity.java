@@ -9,47 +9,52 @@ public class AbstractGameEntity {
     private int angle;
 
     public AbstractGameEntity() {
-        //TODO
+        this.entityType = new GameEntityType;
+        this.alive = true;
+        this.bound = new Bounds(0, 0, 0);
+        this.angle = 0;
     }
 
     public AbstractGameEntity(Bounds bound){
-        //TODO
+        this.alive = true;
+        this.bound = bound;
+        this.angle = 0;
     }
 
     Bounds getBounds() {
-        //TODO
-        return null;
+        return this.bound;
     }
 
     void setBounds(Bounds newBounds) {
-        //TODO
+        this.bound = newBounds;
     }
 
     public int getAngle() {
-        //TODO
-        return 0;
+        return this.angle;
     }
 
     public void setAngle(int angle) {
-        //TODO
+        this.angle = angle;
     }
 
     public boolean isAlive() {
-        //TODO
-
-        return false;
+        return alive;
     }
 
     public void rotate(int rotateBy) {
-        //TODO
+        this.angle += rotateBy;
     }
 
-    public void movement() {
-        //TODO
+    public void movement(int distance) {
+        this.bound.moveTo(distance, this.angle);
     }
 
     public void death() {
-        //TODO
+        this.alive = false;
+    }
+
+    public void setEntityType(GameEntityType entityType) {
+        this.entityType = entityType;
     }
 
 
