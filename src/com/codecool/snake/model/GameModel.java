@@ -8,7 +8,6 @@ import java.util.List;
 
 public class GameModel extends ObservableModel {
     private List<AbstractGameEntity> gameEntities;
-    private GameLoop gameLoop;
     void GameModel() {
         //TODO
     }
@@ -31,6 +30,14 @@ public class GameModel extends ObservableModel {
     }
 
     void removeGameObject(AbstractGameEntity entityToRemove) {
+        //TODO
+    }
+
+    private void moveAll() {
+        //TODO
+    }
+
+    private void cleanDeathEntities() {
         //TODO
     }
 

@@ -6,6 +6,7 @@ import com.codecool.snake.view.GameView;
 import java.awt.event.KeyEvent;
 
 public class Controller {
+    private FrameControlLoop frameLoop;
     private GameView view;
     private GameModel model;
 
