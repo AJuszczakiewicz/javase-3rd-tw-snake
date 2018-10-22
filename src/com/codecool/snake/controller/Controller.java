@@ -6,12 +6,13 @@ import com.codecool.snake.view.GameView;
 import java.awt.event.KeyEvent;
 
 public class Controller {
-    private FrameControlLoop frameLoop = new FrameControlLoop();
     private GameView view;
     private GameModel model;
 
-    public Controller(GameView view, GameModel model){
+    Controller(){
         //TODO
+        this.view = new GameView();
+        this.model = new GameModel();
     }
 
     public void handleOnKeyPressed(KeyEvent event){
@@ -19,6 +20,10 @@ public class Controller {
     }
 
     public void handleOnKeyReleased(KeyEvent event){
+        //TODO
+    }
+
+    void updateModel(){
         //TODO
     }
 }

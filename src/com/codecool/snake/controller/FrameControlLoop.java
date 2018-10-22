@@ -2,12 +2,21 @@ package com.codecool.snake.controller;
 
 
 public class FrameControlLoop implements Runnable {
+    private Controller controller;
+
     private boolean readyForNextFrame;
     private boolean isRunning = false;
-    private double deltaT = 0;
+    private long timePassed = 0;
     private long initialTime = System.currentTimeMillis();
-    private long timeFrame = 33; //time in miliseconds for one loop
     private boolean iddle = false;
+    private long startTime = System.currentTimeMillis();
+    private long timer = System.currentTimeMillis();
+    private int tics = 0;
+
+    public FrameControlLoop() {
+        controller = new Controller();
+        run();
+    }
 
 
     public void makeIdle() {
@@ -21,16 +30,28 @@ public class FrameControlLoop implements Runnable {
     public void run() {
         isRunning = true;
         while (isRunning){
+            long timeFrame = 33; //time in miliseconds for one loop
             long currentTime = System.currentTimeMillis();
-            deltaT += (currentTime - initialTime) / timeFrame;
+            timePassed += (currentTime - initialTime);
             initialTime = currentTime;
 
-            if (deltaT >= 1) {
+            if (timePassed >= timeFrame) {
                 if (!iddle){
+                    controller.updateModel();
                     readyForNextFrame = true;
+                    tics += 1;
+                    timePassed = 0;
                 }
-
             }
+            if (currentTime-startTime>1000){
+                System.out.println("FPS: "+tics);
+                startTime = System.currentTimeMillis();
+                tics = 0;
+            }
+            if (currentTime-timer>10000){
+                isRunning=!isRunning;
+            }
+
         }
 
     }
