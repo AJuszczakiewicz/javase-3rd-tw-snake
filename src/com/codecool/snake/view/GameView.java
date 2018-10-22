@@ -1,5 +1,6 @@
 package com.codecool.snake.view;
 
+import com.codecool.snake.common.EntityObserver;
 import com.codecool.snake.common.GameEntityType;
 import com.codecool.snake.common.ModelObserver;
 import com.codecool.snake.controller.Controller;
@@ -27,31 +28,29 @@ public class GameView extends Pane implements ModelObserver {
 
     @Override
     public void updateOnSpawn(AbstractGameEntity spawnEntity) {
+        Group entity = new Group();
+
         switch (spawnEntity.getGameEntityType()){
             case ENEMY:
-                EntityView enemy = new EntityView(costumes.get(GameEntityType.ENEMY));
-                spawnEntity.addObserver(enemy);
-                entitiesOnScene.put(spawnEntity.toString(), enemy);
-                getChildren().add(enemy);
+                entity = new EntityView(costumes.get(GameEntityType.ENEMY));
                 break;
             case POWERUP:
-                EntityView powerup = new EntityView(costumes.get(GameEntityType.POWERUP));
-                spawnEntity.addObserver(powerup);
-                entitiesOnScene.put(spawnEntity.toString(), powerup);
-                getChildren().add(powerup);
+                entity = new EntityView(costumes.get(GameEntityType.POWERUP));
                 break;
             case SNAKE:
-                SnakeView snake = new SnakeView(costumes.get(GameEntityType.SNAKE), costumes.get(GameEntityType.SNAKETAIL));
-                spawnEntity.addObserver(snake);
-                entitiesOnScene.put(spawnEntity.toString(), snake);
-                getChildren().add(snake);
+                entity = new SnakeView(costumes.get(GameEntityType.SNAKE), costumes.get(GameEntityType.SNAKETAIL));
                 break;
         }
+
+        spawnEntity.addObserver((EntityObserver) entity);
+        entitiesOnScene.put(spawnEntity.toString(), entity);
+        getChildren().add(entity);
     }
 
     @Override
     public void updateOnDestroy(AbstractGameEntity destroyedEntity) {
         Group entity = entitiesOnScene.get(destroyedEntity.toString());
+
         entitiesOnScene.remove(entity);
         getChildren().remove(entity);
     }
