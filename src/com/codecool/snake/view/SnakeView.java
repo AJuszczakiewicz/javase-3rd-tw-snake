@@ -14,11 +14,19 @@ import javafx.scene.layout.Pane;
 import javax.swing.text.html.HTMLDocument;
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.Optional;
 
 public class SnakeView extends Group implements EntityObserver {
 
     private Image head;
     private Image tail;
+
+    private ImageView addTailPart(){
+        ImageView part = new ImageView(tail);
+        getChildren().add(part);
+
+        return part;
+    }
 
     public SnakeView(Image costumForHead, Image costumForTail){
         this.head = costumForHead;
@@ -28,36 +36,27 @@ public class SnakeView extends Group implements EntityObserver {
         getChildren().add(new ImageView(tail));
     }
 
+
     @Override
     public void updateOnChange(AbstractGameEntity changedEntity) {
-        ListIterator<Node> viewElements = getChildren().listIterator();
-        Iterator<Bounds> snakeTailParts = ((SnakeEntity) changedEntity).getSnakeBounds().iterator();
+        Iterator<Bounds> snakeBounds = ((SnakeEntity) changedEntity).getSnakeBounds().iterator();
+        Iterator<Node> snakeViewParts = getChildren().iterator();
 
-        while(viewElements.hasNext() && snakeTailParts.hasNext()) {
-            Bounds part = snakeTailParts.next();
-            ImageView partOfSnake = (ImageView) viewElements.next();
+        snakeBounds.forEachRemaining(bound -> {
+            Node snakePart;
 
-            partOfSnake.setX(part.getX());
-            partOfSnake.setY(part.getY());
-        }
+            if(snakeViewParts.hasNext()) {
+                snakePart = snakeViewParts.next();
+            }
+            else {
+                snakePart = addTailPart();
+            }
 
-        snakeTailParts.forEachRemaining(bounds -> {
-            ImageView newPart = new ImageView(tail);
-
-            newPart.setX(bounds.getX());
-            newPart.setY(bounds.getY());
-
-            getChildren().add(newPart);
+            snakePart.setLayoutX(bound.getX());
+            snakePart.setLayoutY(bound.getY());
         });
 
-        if(!getChildren().isEmpty()) {
-            ImageView partOfSnake = (ImageView) getChildren().get(0);
-            partOfSnake.setRotate(changedEntity.getAngle());
-        }
-
-
-//        setX(changedEntity.getBounds().getX());
-//        setY(changedEntity.getBounds().getY());
-//        setRotate(changedEntity.getAngle());
+        getChildren().get(0)
+                .setRotate(changedEntity.getAngle());
     }
 }
