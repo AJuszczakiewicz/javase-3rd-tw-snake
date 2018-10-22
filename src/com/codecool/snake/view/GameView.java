@@ -4,6 +4,8 @@ import com.codecool.snake.common.GameEntityType;
 import com.codecool.snake.common.ModelObserver;
 import com.codecool.snake.controller.Controller;
 import com.codecool.snake.model.AbstractGameEntity;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,7 +17,7 @@ import java.util.Map;
 
 public class GameView extends Pane implements ModelObserver {
     private static HashMap<GameEntityType, Image> costumes;
-    private HashMap<String, ImageView> entitiesOnScene;
+    private HashMap<String, Group> entitiesOnScene = new HashMap<>();
     private Scene scene;
 
     public GameView(Stage primaryStage){
@@ -28,24 +30,28 @@ public class GameView extends Pane implements ModelObserver {
         switch (spawnEntity.getGameEntityType()){
             case ENEMY:
                 EntityView enemy = new EntityView(costumes.get(GameEntityType.ENEMY));
+                spawnEntity.addObserver(enemy);
                 entitiesOnScene.put(spawnEntity.toString(), enemy);
                 getChildren().add(enemy);
                 break;
             case POWERUP:
                 EntityView powerup = new EntityView(costumes.get(GameEntityType.POWERUP));
+                spawnEntity.addObserver(powerup);
                 entitiesOnScene.put(spawnEntity.toString(), powerup);
                 getChildren().add(powerup);
                 break;
             case SNAKE:
                 SnakeView snake = new SnakeView(costumes.get(GameEntityType.SNAKE), costumes.get(GameEntityType.SNAKETAIL));
+                spawnEntity.addObserver(snake);
                 entitiesOnScene.put(spawnEntity.toString(), snake);
                 getChildren().add(snake);
+                break;
         }
     }
 
     @Override
     public void updateOnDestroy(AbstractGameEntity destroyedEntity) {
-        ImageView entity = entitiesOnScene.get(destroyedEntity.toString());
+        Group entity = entitiesOnScene.get(destroyedEntity.toString());
         entitiesOnScene.remove(entity);
         getChildren().remove(entity);
     }
@@ -61,7 +67,7 @@ public class GameView extends Pane implements ModelObserver {
         //TODO
     }
 
-    private static void loadCostumes(){
+    public static void loadCostumes(){
         costumes = new HashMap<>();
         costumes.put(GameEntityType.SNAKE, new Image("snake_head.png"));
         costumes.put(GameEntityType.ENEMY, new Image("simple_enemy.png"));
