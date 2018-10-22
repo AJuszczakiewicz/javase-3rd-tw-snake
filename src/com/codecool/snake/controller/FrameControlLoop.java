@@ -46,4 +46,8 @@ public class FrameControlLoop implements Runnable {
     public boolean isReadyForNextFrame() {
         return readyForNextFrame;
     }
+
+    public void consumeFrame(){
+        readyForNextFrame = false;
+    }
 }
