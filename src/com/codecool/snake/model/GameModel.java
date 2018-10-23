@@ -41,36 +41,15 @@ public class GameModel extends ObservableModel {
         //TODO
     }
 
-    boolean running = false;
-    private void updateProcedure(){
-
-        while (true){
-            running = true;
-            long currentTime = System.currentTimeMillis();
-            if(currentTime-startTime>20){
-                System.out.println("update Loop");
-                startTime = System.currentTimeMillis();
-                iterations += 1;
-            }
-            if (iterations>100){
-                running = false;
-                System.out.println("Loop break");
-                iterations = 0;
-                break;
-            }
-
-        }
-    }
-
-
-
     long startTime = System.currentTimeMillis();
     int iterations = 0;
     public void update(){
-        System.out.println("Update Signal");
-//        if (!running) {
-//            updateProcedure();
-//        }
+//        System.out.println("Update Signal");
+        //clean
+        //check for collision
+        //move
+
+
     }
 
 

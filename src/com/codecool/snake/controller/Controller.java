@@ -9,10 +9,10 @@ public class Controller {
     private GameView view;
     private GameModel model;
 
-    Controller(){
+    public Controller(GameModel model, GameView view){
         //TODO
-        this.view = new GameView();
-        this.model = new GameModel();
+        this.view = view;
+        this.model = model;
     }
 
     public void handleOnKeyPressed(KeyEvent event){
