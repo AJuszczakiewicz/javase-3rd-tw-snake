@@ -10,14 +10,13 @@ import javafx.stage.Stage;
 
 import java.util.HashMap;
 
-public class GameView implements ModelObserver {
+public class GameView implements ModelObserver{
     private HashMap<GameEntityType, Image> costumes;
     private Scene scene;
 
     public GameView(){
-        //TODO
-    }
 
+    }
 
     @Override
     public void updateOnSpawn(AbstractGameEntity spawnEntity) {

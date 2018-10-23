@@ -15,7 +15,6 @@ public class FrameControlLoop implements Runnable {
 
     public FrameControlLoop() {
         controller = new Controller();
-        run();
     }
 
 
@@ -30,7 +29,7 @@ public class FrameControlLoop implements Runnable {
     public void run() {
         isRunning = true;
         while (isRunning){
-            long timeFrame = 33; //time in miliseconds for one loop
+            long timeFrame = 50; //time in miliseconds for one loop
             long currentTime = System.currentTimeMillis();
             timePassed += (currentTime - initialTime);
             initialTime = currentTime;
@@ -38,7 +37,7 @@ public class FrameControlLoop implements Runnable {
             if (timePassed >= timeFrame) {
                 if (!iddle){
                     controller.updateModel();
-                    readyForNextFrame = true;
+//                    readyForNextFrame = true;
                     tics += 1;
                     timePassed = 0;
                 }
@@ -48,7 +47,7 @@ public class FrameControlLoop implements Runnable {
                 startTime = System.currentTimeMillis();
                 tics = 0;
             }
-            if (currentTime-timer>10000){
+            if (currentTime-timer>30000){
                 isRunning=!isRunning;
             }
 

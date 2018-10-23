@@ -24,6 +24,7 @@ public class Controller {
     }
 
     void updateModel(){
+        model.update();
         //TODO
     }
 }
