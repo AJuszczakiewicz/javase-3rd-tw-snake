@@ -10,7 +10,6 @@ public class Controller {
     private GameModel model;
 
     public Controller(GameModel model, GameView view){
-        //TODO
         this.view = view;
         this.model = model;
     }
@@ -25,6 +24,5 @@ public class Controller {
 
     void updateModel(){
         model.update();
-        //TODO
     }
 }

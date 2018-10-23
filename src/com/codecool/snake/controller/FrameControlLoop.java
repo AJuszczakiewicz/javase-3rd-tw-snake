@@ -38,12 +38,14 @@ public class FrameControlLoop implements Runnable {
     public void run() {
         isRunning = true;
         while (isRunning){
-            long timeFrame = 33; //time in miliseconds for one loop
+            int FRAMERATE = 30;
+            long timeFrame = 1000/FRAMERATE; //time in miliseconds for one loop
             long currentTime = System.currentTimeMillis();
             counter += (currentTime - initialTime);
             initialTime = currentTime;
 
             if (counter >= timeFrame) {
+
                 if (!iddle){
                     controller.updateModel();
                     tics += 1;

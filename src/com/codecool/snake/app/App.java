@@ -16,6 +16,9 @@ import javafx.stage.WindowEvent;
 
 
 public class App extends Application{
+    int WIDTH = 800;
+    int HEIGHT = 600;
+
     public static void main(String[] args) {
         launch(args);
 
@@ -23,22 +26,16 @@ public class App extends Application{
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(event -> System.out.println("Hello World!"));
-
+        primaryStage.setTitle("Snake");
         StackPane root = new StackPane();
-        root.getChildren().add(btn);
-
-
-        primaryStage.setScene(new Scene(root, 300, 250));
-        primaryStage.show();
 
         GameModel model = new GameModel();
         GameView view = new GameView();
         Controller controller = new Controller(model, view);
         FrameControlLoop gameLoop = new FrameControlLoop(controller);
+
+        primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
+        primaryStage.show();
 
         primaryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> gameLoop.stop());
         (new Thread(gameLoop)).start();

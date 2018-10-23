@@ -41,15 +41,16 @@ public class GameModel extends ObservableModel {
         //TODO
     }
 
+    private void checkForCollision() {
+        //TODO
+    }
+
     long startTime = System.currentTimeMillis();
     int iterations = 0;
     public void update(){
-//        System.out.println("Update Signal");
-        //clean
-        //check for collision
-        //move
-
-
+        cleanDeathEntities();
+        checkForCollision();
+        moveAll();
     }
 
 
