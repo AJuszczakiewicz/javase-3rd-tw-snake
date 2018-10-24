@@ -2,6 +2,7 @@ package com.codecool.snake.model;
 
 import javafx.scene.input.KeyEvent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +26,12 @@ public class SnakeEntity extends AbstractGameEntity {
 
     public void interactWith(AbstractGameEntity otherGameObject) {
         //TODO
+    }
+
+    public ArrayList<Bounds> getSnakeBounds(){
+        //TODO
+        ArrayList<Bounds> snakeBounds = new ArrayList<>();
+        return snakeBounds;
     }
 
     public void interpretEvent(KeyEvent event) {
