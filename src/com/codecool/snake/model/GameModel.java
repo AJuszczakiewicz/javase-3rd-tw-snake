@@ -35,11 +35,29 @@ public class GameModel extends ObservableModel {
     }
 
     void spawnGameObject(GameEntityType type) {
-        //TODO
+        AbstractGameEntity entity = null;
+
+        switch (type) {
+            case SNAKE:
+                entity = new SnakeEntity(5);
+                break;
+            case ENEMY:
+                entity = new EnemyEntity();
+                break;
+            case POWERUP:
+                entity = new PowerupEntity();
+                break;
+        }
+
+        if(entity != null) {
+            gameEntities.add(entity);
+            notifyAboutSpawn(entity);
+        }
     }
 
     void removeGameObject(AbstractGameEntity entityToRemove) {
-        //TODO
+        gameEntities.remove(entityToRemove);
+        notifyAboutDestroy(entityToRemove);
     }
 
 
