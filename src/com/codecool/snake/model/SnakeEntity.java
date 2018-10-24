@@ -1,6 +1,8 @@
 package com.codecool.snake.model;
 
 import com.codecool.snake.common.GameEntityType;
+
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayDeque;
@@ -13,7 +15,7 @@ public class SnakeEntity extends AbstractGameEntity {
     private Deque<Bounds> tail = new ArrayDeque<>();
     private Direction turnDirection = Direction.CENTER;
 
-    public SnakeEntity(int initialSize) {
+    SnakeEntity(int initialSize) {
         super();
         this.setEntityType(GameEntityType.SNAKE);
 
@@ -29,19 +31,19 @@ public class SnakeEntity extends AbstractGameEntity {
         this.control = control;
     }
 
-    public boolean isCollideWith(AbstractGameEntity collider) {
+    boolean isCollideWith(AbstractGameEntity collider) {
         return collider.getBounds().intersectWith(this.getBounds());
     }
 
-    public void interactWith(AbstractGameEntity otherGameObject) {
+    void interactWith(AbstractGameEntity otherGameObject) {
 //        System.out.println("==> Snake interact with [" + otherGameObject.getEntityType() + "]");
 
         switch (otherGameObject.getEntityType()) {
             case POWERUP:
-//                eat(otherGameObject);
+                eat(otherGameObject);
                 break;
             case ENEMY:
-//                kill(otherGameObject);
+                kill(otherGameObject);
                 break;
         }
     }
@@ -52,29 +54,40 @@ public class SnakeEntity extends AbstractGameEntity {
         return snakeBounds;
     }
 
-    public void interpretEvent(KeyEvent event) {
-        //TODO
+    void interpretEvent(KeyEvent event) {
+        if (event.getCode() == KeyCode.A) {
+            this.turnDirection = Direction.LEFT;
+            System.out.println("A pressed");
+        }
+        if (event.getCode() == KeyCode.S) {
+            this.turnDirection = (Direction.RIGHT);
+            System.out.println("S pressed");
+        }
     }
 
-    public void eat(AbstractGameEntity edibleEntity) {
-        System.out.println("==> Snake eat [" + edibleEntity.getEntityType() + "]");
+    private void eat(AbstractGameEntity edibleEntity) {
+//        System.out.println("==> Snake eat [" + edibleEntity.getEntityType() + "]");
 
-        edibleEntity.death();
+//        edibleEntity.death();
     }
 
-    public void kill(AbstractGameEntity killableEntity) {
-        System.out.println("==> Snake kill [" + killableEntity.getEntityType() + "]");
+    private void kill(AbstractGameEntity killableEntity) {
+//        System.out.println("==> Snake kill [" + killableEntity.getEntityType() + "]");
 
 
-        killableEntity.death();
+//        killableEntity.death();
     }
 
     public void movement() {
         switch(turnDirection) {
             case LEFT:
                 rotate(-25);
+                turnDirection = Direction.CENTER;
+                System.out.println("Centered");
             case RIGHT:
                 rotate(25);
+                turnDirection = Direction.CENTER;
+                System.out.println("Centered");
         }
 
         tail.pollLast();

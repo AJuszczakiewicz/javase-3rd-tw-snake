@@ -2,6 +2,7 @@ package com.codecool.snake.model;
 
 import com.codecool.snake.common.GameEntityType;
 import com.codecool.snake.common.ObservableModel;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
@@ -23,16 +24,20 @@ public class GameModel extends ObservableModel {
         }
     }
 
-    void interpretEvent(KeyEvent event) {
-        //TODO
+    public void interpretPressEvent(KeyEvent event) {
+        for (AbstractGameEntity gameEntity : gameEntities)
+            if (gameEntity.getEntityType().equals(GameEntityType.SNAKE)) {
+                ((SnakeEntity) gameEntity).interpretEvent(event);
+            }
     }
+
 
     List<AbstractGameEntity> getAllGameEntities() {
         //TODO
         return null;
     }
 
-    void spawnGameObject(GameEntityType type) {
+    private void spawnGameObject(GameEntityType type) {
         AbstractGameEntity entity = null;
 
         switch (type) {
@@ -63,20 +68,17 @@ public class GameModel extends ObservableModel {
 //        System.out.println("==> Update model: <move all entities>");
 
         for (AbstractGameEntity entity:  gameEntities) {
-            entity.movement();
+                entity.movement();
+            if(entity.getEntityType().equals(GameEntityType.SNAKE)){
+//                System.out.println("Move my Snake");
+            }
         }
     }
 
     private void cleanDeathEntities() {
 //        System.out.println("==> Update model: <cleanup>");
 
-        Iterator<AbstractGameEntity> entity = gameEntities.iterator();
-
-        while(entity.hasNext()) {
-            if(!entity.next().isAlive()) {
-                entity.remove();
-            }
-        }
+        gameEntities.removeIf(abstractGameEntity -> !abstractGameEntity.isAlive());
     }
 
     private void checkForCollision() {
@@ -113,5 +115,6 @@ public class GameModel extends ObservableModel {
         checkForCollision();
         moveAll();
     }
+
 
 }

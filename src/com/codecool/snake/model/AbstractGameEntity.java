@@ -38,16 +38,21 @@ public class AbstractGameEntity extends ObservableEntity {
         this.angle = angle;
     }
 
-    public boolean isAlive() {
+    boolean isAlive() {
         return alive;
     }
 
-    public void rotate(int rotateBy) {
+    void rotate(int rotateBy) {
         this.angle += rotateBy;
     }
 
     public void movement() {
         this.bound.moveTo(SPEED, this.angle);
+        notifyAboutChange(this);
+    }
+
+    public void movement(int speed) {
+        this.bound.moveTo(speed, this.angle);
         notifyAboutChange(this);
     }
 
@@ -57,7 +62,7 @@ public class AbstractGameEntity extends ObservableEntity {
         this.alive = false;
     }
 
-    public void setEntityType(GameEntityType entityType) {
+    void setEntityType(GameEntityType entityType) {
         this.entityType = entityType;
     }
 

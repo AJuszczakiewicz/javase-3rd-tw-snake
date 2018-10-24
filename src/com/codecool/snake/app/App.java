@@ -1,7 +1,6 @@
 package com.codecool.snake.app;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -24,12 +23,16 @@ public class App extends Application {
 
         GameModel model = new GameModel();
         GameView view = new GameView(primaryStage);
+
         model.addObserver(view);
         model.initModel();
+
         Controller controller = new Controller(model, view);
+
         FrameControlLoop gameLoop = new FrameControlLoop(controller);
 
         primaryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> gameLoop.stop());
+
         gameLoop.setDaemon(true);
         gameLoop.start();
 

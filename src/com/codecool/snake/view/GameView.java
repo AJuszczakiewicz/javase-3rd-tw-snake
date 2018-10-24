@@ -5,6 +5,7 @@ import com.codecool.snake.common.GameEntityType;
 import com.codecool.snake.common.ModelObserver;
 import com.codecool.snake.controller.Controller;
 import com.codecool.snake.model.AbstractGameEntity;
+import com.codecool.snake.model.SnakeEntity;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -23,6 +24,7 @@ public class GameView extends Pane implements ModelObserver {
     public GameView(Stage primaryStage){
         attachViewToStage(primaryStage);
         loadCostumes();
+
 
     }
 
@@ -60,12 +62,14 @@ public class GameView extends Pane implements ModelObserver {
 
         stage.setScene(scene);
         stage.show();
-//        stage.setFocused(true);
         stage.requestFocus();
+
+
     }
 
     public void attachInputToController(Controller controller){
-        //TODO
+        scene.setOnKeyPressed(controller::handleOnKeyPressed);
+
     }
 
     private void loadCostumes(){

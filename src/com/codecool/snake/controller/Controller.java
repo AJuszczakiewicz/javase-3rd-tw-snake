@@ -2,8 +2,7 @@ package com.codecool.snake.controller;
 
 import com.codecool.snake.model.GameModel;
 import com.codecool.snake.view.GameView;
-
-import java.awt.event.KeyEvent;
+import javafx.scene.input.KeyEvent;
 
 public class Controller {
     private GameView view;
@@ -12,15 +11,13 @@ public class Controller {
     public Controller(GameModel model, GameView view){
         this.view = view;
         this.model = model;
+        view.attachInputToController(this);
     }
 
     public void handleOnKeyPressed(KeyEvent event){
-        //TODO
+        model.interpretPressEvent(event);
     }
 
-    public void handleOnKeyReleased(KeyEvent event){
-        //TODO
-    }
 
     void updateModel(){
         model.update();
