@@ -23,13 +23,13 @@ public class GameView extends Pane implements ModelObserver {
     public GameView(Stage primaryStage){
         attachViewToStage(primaryStage);
         loadCostumes();
+
     }
 
 
     @Override
     public void updateOnSpawn(AbstractGameEntity spawnEntity) {
         Group entity = new Group();
-
         switch (spawnEntity.getEntityType()){
             case ENEMY:
                 entity = new EntityView(costumes.get(GameEntityType.ENEMY));
@@ -60,6 +60,8 @@ public class GameView extends Pane implements ModelObserver {
 
         stage.setScene(scene);
         stage.show();
+//        stage.setFocused(true);
+        stage.requestFocus();
     }
 
     public void attachInputToController(Controller controller){

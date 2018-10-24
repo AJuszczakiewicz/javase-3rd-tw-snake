@@ -34,10 +34,14 @@ public class FrameControlLoop extends Thread implements Runnable {
 
     public void run() {
 
-        Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+        try {
+            sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         isRunning = true;
         while (isRunning){
-            int FRAMERATE = 20;
+            int FRAMERATE = 50;
             long timeFrame = 1000/FRAMERATE; //time in miliseconds for one loop
             long currentTime = System.currentTimeMillis();
             counter += (currentTime - initialTime);
@@ -56,12 +60,6 @@ public class FrameControlLoop extends Thread implements Runnable {
                 startTime = System.currentTimeMillis();
                 tics = 0;
             }
-            try {
-                sleep(20);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
-
     }
 }

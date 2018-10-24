@@ -33,8 +33,6 @@ public class App extends Application {
         gameLoop.setDaemon(true);
         gameLoop.start();
 
-
-
     }
 
 }
