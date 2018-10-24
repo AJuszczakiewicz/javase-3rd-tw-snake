@@ -1,8 +1,9 @@
 package com.codecool.snake.model;
 
 import com.codecool.snake.common.GameEntityType;
+import com.codecool.snake.common.ObservableEntity;
 
-public class AbstractGameEntity {
+public class AbstractGameEntity extends ObservableEntity {
     private GameEntityType entityType;
     private boolean alive;
     private Bounds bound;
