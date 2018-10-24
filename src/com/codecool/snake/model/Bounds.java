@@ -1,7 +1,5 @@
 package com.codecool.snake.model;
 
-import sun.font.TrueTypeFont;
-
 public class Bounds {
     private double x;
     private double y;
@@ -20,11 +18,11 @@ public class Bounds {
     }
 
     public int getX() {
-        return x;
+        return (int) x;
     }
 
     public int getY() {
-        return y;
+        return (int) y;
     }
 
     public int getRadius() {
