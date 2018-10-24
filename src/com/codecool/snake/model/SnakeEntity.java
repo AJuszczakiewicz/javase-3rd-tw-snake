@@ -32,7 +32,7 @@ public class SnakeEntity extends AbstractGameEntity {
     }
 
     public void interactWith(AbstractGameEntity otherGameObject) {
-
+        System.out.println("==> Snake interact with [" + otherGameObject.getEntityType() + "]");
     }
 
     public void interpretEvent(KeyEvent event) {
@@ -40,11 +40,11 @@ public class SnakeEntity extends AbstractGameEntity {
     }
 
     public void eat(AbstractGameEntity edibleEntity) {
-        //TODO
+        System.out.println("==> Snake eat [" + edibleEntity.getEntityType() + "]");
     }
 
     public void kill(AbstractGameEntity killableEntity) {
-        //TODO
+        System.out.println("==> Snake kill [" + killableEntity.getEntityType() + "]");
     }
 
     public void movement() {

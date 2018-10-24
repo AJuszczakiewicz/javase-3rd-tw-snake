@@ -49,6 +49,8 @@ public class AbstractGameEntity {
     }
 
     public void death() {
+        System.out.println("==> ... Death of " + entityType);
+
         this.alive = false;
     }
 
