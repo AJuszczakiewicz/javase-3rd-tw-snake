@@ -8,6 +8,7 @@ public class AbstractGameEntity extends ObservableEntity {
     private boolean alive;
     private Bounds bound;
     private int angle;
+    private int SPEED = 5;
 
     public AbstractGameEntity() {
         this.alive = true;
@@ -21,7 +22,7 @@ public class AbstractGameEntity extends ObservableEntity {
         this.angle = 0;
     }
 
-    Bounds getBounds() {
+    public Bounds getBounds() {
         return this.bound;
     }
 
@@ -46,7 +47,8 @@ public class AbstractGameEntity extends ObservableEntity {
     }
 
     public void movement() {
-        this.bound.moveTo(10, this.angle);
+        this.bound.moveTo(SPEED, this.angle);
+        notifyAboutChange(this);
     }
 
     public void death() {

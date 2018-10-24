@@ -10,8 +10,6 @@ import java.util.List;
 
 public class GameModel extends ObservableModel {
     private List<AbstractGameEntity> gameEntities;
-    private GameLoop gameLoop;
-
     public GameModel() {
         gameEntities = new ArrayList<>();
     }
@@ -62,7 +60,7 @@ public class GameModel extends ObservableModel {
 
 
     private void moveAll() {
-        System.out.println("==> Update model: <move all entities>");
+//        System.out.println("==> Update model: <move all entities>");
 
         for (AbstractGameEntity entity:  gameEntities) {
             entity.movement();
@@ -70,7 +68,7 @@ public class GameModel extends ObservableModel {
     }
 
     private void cleanDeathEntities() {
-        System.out.println("==> Update model: <cleanup>");
+//        System.out.println("==> Update model: <cleanup>");
 
         Iterator<AbstractGameEntity> entity = gameEntities.iterator();
 
@@ -82,7 +80,7 @@ public class GameModel extends ObservableModel {
     }
 
     private void checkForCollision() {
-        System.out.println("==> Update model: <check collision>");
+//        System.out.println("==> Update model: <check collision>");
 
         // filter list
         ArrayList<AbstractGameEntity> entities = new ArrayList<>();

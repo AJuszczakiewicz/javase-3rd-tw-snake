@@ -9,8 +9,9 @@ public class Controller {
     private GameView view;
     private GameModel model;
 
-    public Controller(GameView view, GameModel model){
-        //TODO
+    public Controller(GameModel model, GameView view){
+        this.view = view;
+        this.model = model;
     }
 
     public void handleOnKeyPressed(KeyEvent event){
@@ -19,5 +20,9 @@ public class Controller {
 
     public void handleOnKeyReleased(KeyEvent event){
         //TODO
+    }
+
+    void updateModel(){
+        model.update();
     }
 }

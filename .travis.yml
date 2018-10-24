@@ -1,3 +1,0 @@
-language: java
-script:
-- javac src/com/codecool/snake/*.java

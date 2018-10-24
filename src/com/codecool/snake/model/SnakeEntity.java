@@ -6,6 +6,7 @@ import javafx.scene.input.KeyEvent;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class SnakeEntity extends AbstractGameEntity {
     private HashMap<KeyEvent, Direction> control;
@@ -33,16 +34,22 @@ public class SnakeEntity extends AbstractGameEntity {
     }
 
     public void interactWith(AbstractGameEntity otherGameObject) {
-        System.out.println("==> Snake interact with [" + otherGameObject.getEntityType() + "]");
+//        System.out.println("==> Snake interact with [" + otherGameObject.getEntityType() + "]");
 
         switch (otherGameObject.getEntityType()) {
             case POWERUP:
-                eat(otherGameObject);
+//                eat(otherGameObject);
                 break;
             case ENEMY:
-                kill(otherGameObject);
+//                kill(otherGameObject);
                 break;
         }
+    }
+
+    public ArrayList<Bounds> getSnakeBounds(){
+        //TODO
+        ArrayList<Bounds> snakeBounds = new ArrayList<>();
+        return snakeBounds;
     }
 
     public void interpretEvent(KeyEvent event) {
