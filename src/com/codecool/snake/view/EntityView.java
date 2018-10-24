@@ -11,7 +11,7 @@ public class EntityView extends Group implements EntityObserver {
 
     private Image head;
 
-    public EntityView(Image costumForHead){
+    EntityView(Image costumForHead){
         this.head = costumForHead;
 
         getChildren().add(new ImageView(head));

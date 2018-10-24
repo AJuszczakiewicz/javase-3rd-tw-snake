@@ -28,7 +28,7 @@ public class SnakeView extends Group implements EntityObserver {
         return part;
     }
 
-    public SnakeView(Image costumForHead, Image costumForTail){
+    SnakeView(Image costumForHead, Image costumForTail){
         this.head = costumForHead;
         this.tail = costumForTail;
 

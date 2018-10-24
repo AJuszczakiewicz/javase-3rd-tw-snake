@@ -53,7 +53,7 @@ public class AbstractGameEntity extends ObservableEntity {
         //TODO
     }
 
-    public void setGameEntityType(GameEntityType type){
+    void setGameEntityType(GameEntityType type){
         entityType = type;
     }
 

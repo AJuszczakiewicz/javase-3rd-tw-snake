@@ -20,9 +20,12 @@ public class GameView extends Pane implements ModelObserver {
     private static HashMap<GameEntityType, Image> costumes;
     private HashMap<String, Group> entitiesOnScene = new HashMap<>();
     private Scene scene;
+    private int WIDTH = 1000;
+    private int HEIGHT = 700;
 
     public GameView(Stage primaryStage){
         attachViewToStage(primaryStage);
+        loadCostumes();
     }
 
 
@@ -55,8 +58,8 @@ public class GameView extends Pane implements ModelObserver {
         getChildren().remove(entity);
     }
 
-    public void attachViewToStage(Stage stage){
-        scene = new Scene(this, 1000, 700);
+    private void attachViewToStage(Stage stage){
+        scene = new Scene(this, WIDTH, HEIGHT);
 
         stage.setScene(scene);
         stage.show();
@@ -66,7 +69,7 @@ public class GameView extends Pane implements ModelObserver {
         //TODO
     }
 
-    public static void loadCostumes(){
+    private void loadCostumes(){
         costumes = new HashMap<>();
         costumes.put(GameEntityType.SNAKE, new Image("snake_head.png"));
         costumes.put(GameEntityType.ENEMY, new Image("simple_enemy.png"));
