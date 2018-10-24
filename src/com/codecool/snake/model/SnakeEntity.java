@@ -3,13 +3,14 @@ package com.codecool.snake.model;
 import com.codecool.snake.common.GameEntityType;
 import javafx.scene.input.KeyEvent;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
-import java.util.List;
 
 public class SnakeEntity extends AbstractGameEntity {
     private HashMap<KeyEvent, Direction> control;
-    private Direction turnDirection;
     private Deque<Bounds> tail = new ArrayDeque<>();
+    private Direction turnDirection = Direction.CENTER;
 
     public SnakeEntity(int initialSize) {
         super();
@@ -33,6 +34,15 @@ public class SnakeEntity extends AbstractGameEntity {
 
     public void interactWith(AbstractGameEntity otherGameObject) {
         System.out.println("==> Snake interact with [" + otherGameObject.getEntityType() + "]");
+
+        switch (otherGameObject.getEntityType()) {
+            case POWERUP:
+                eat(otherGameObject);
+                break;
+            case ENEMY:
+                kill(otherGameObject);
+                break;
+        }
     }
 
     public void interpretEvent(KeyEvent event) {
@@ -41,14 +51,28 @@ public class SnakeEntity extends AbstractGameEntity {
 
     public void eat(AbstractGameEntity edibleEntity) {
         System.out.println("==> Snake eat [" + edibleEntity.getEntityType() + "]");
+
+        edibleEntity.death();
     }
 
     public void kill(AbstractGameEntity killableEntity) {
         System.out.println("==> Snake kill [" + killableEntity.getEntityType() + "]");
+
+
+        killableEntity.death();
     }
 
     public void movement() {
-        //TODO
+        switch(turnDirection) {
+            case LEFT:
+                rotate(-25);
+            case RIGHT:
+                rotate(25);
+        }
+
+        tail.pollLast();
+        tail.addFirst(getBounds());
+        super.movement();
     }
 
 
