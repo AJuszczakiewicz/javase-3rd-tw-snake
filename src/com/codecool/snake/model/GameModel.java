@@ -61,6 +61,59 @@ public class GameModel extends ObservableModel {
     }
 
 
+    private void moveAll() {
+        System.out.println("==> Update model: <move all entities>");
 
+        for (AbstractGameEntity entity:  gameEntities) {
+            entity.movement();
+        }
+    }
+
+    private void cleanDeathEntities() {
+        System.out.println("==> Update model: <cleanup>");
+
+        Iterator<AbstractGameEntity> entity = gameEntities.iterator();
+
+        while(entity.hasNext()) {
+            if(!entity.next().isAlive()) {
+                entity.remove();
+            }
+        }
+    }
+
+    private void checkForCollision() {
+        System.out.println("==> Update model: <check collision>");
+
+        // filter list
+        ArrayList<AbstractGameEntity> entities = new ArrayList<>();
+        ArrayList<SnakeEntity> snakes = new ArrayList<>();
+
+        for(AbstractGameEntity entity : gameEntities) {
+            switch (entity.getEntityType()) {
+                case SNAKE:
+                    snakes.add((SnakeEntity) entity);
+                    break;
+
+                default:
+                    entities.add(entity);
+            }
+        }
+
+        for(SnakeEntity snake: snakes) {
+            for(AbstractGameEntity entity: entities) {
+                if(snake.isCollideWith(entity)) continue;
+
+                snake.interactWith(entity);
+            }
+        }
+    }
+
+    long startTime = System.currentTimeMillis();
+    int iterations = 0;
+    public void update(){
+        cleanDeathEntities();
+        checkForCollision();
+        moveAll();
+    }
 
 }
