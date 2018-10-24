@@ -56,5 +56,9 @@ public class AbstractGameEntity {
         this.entityType = entityType;
     }
 
+    public GameEntityType getEntityType() {
+        return entityType;
+    }
+
 
 }
