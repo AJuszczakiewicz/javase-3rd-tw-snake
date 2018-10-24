@@ -44,8 +44,8 @@ public class AbstractGameEntity {
         this.angle += rotateBy;
     }
 
-    public void movement(int distance) {
-        this.bound.moveTo(distance, this.angle);
+    public void movement() {
+        this.bound.moveTo(10, this.angle);
     }
 
     public void death() {
