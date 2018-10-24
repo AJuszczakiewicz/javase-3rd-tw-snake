@@ -8,14 +8,19 @@ import java.util.List;
 
 public class SnakeEntity extends AbstractGameEntity {
     private HashMap<KeyEvent, Direction> control;
-    private List<Bounds> tail;
     private Direction turnDirection;
+    private Deque<Bounds> tail = new ArrayDeque<>();
 
     public SnakeEntity(int initialSize) {
         super();
         this.setEntityType(GameEntityType.SNAKE);
 
+        for(int i = 1; i <= initialSize; ++i) {
+            Bounds newPart = new Bounds(getBounds());
+            newPart.moveTo(30*i, 0);
 
+            tail.addLast(newPart);
+        }
     }
 
     public void setControl(HashMap<KeyEvent, Direction> control) {
