@@ -9,7 +9,6 @@ public class AbstractGameEntity {
     private int angle;
 
     public AbstractGameEntity() {
-        this.entityType = new GameEntityType;
         this.alive = true;
         this.bound = new Bounds(0, 0, 0);
         this.angle = 0;
