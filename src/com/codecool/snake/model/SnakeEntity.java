@@ -71,13 +71,13 @@ public class SnakeEntity extends AbstractGameEntity {
     }
 
     private void eat(AbstractGameEntity edibleEntity) {
-//        System.out.println("==> Snake eat [" + edibleEntity.getEntityType() + "]");
+        System.out.println("==> Snake eat [" + edibleEntity.getEntityType() + "]");
 
         edibleEntity.death();
     }
 
     private void kill(AbstractGameEntity killableEntity) {
-//        System.out.println("==> Snake kill [" + killableEntity.getEntityType() + "]");
+        System.out.println("==> Snake kill [" + killableEntity.getEntityType() + "]");
 
 
         killableEntity.death();

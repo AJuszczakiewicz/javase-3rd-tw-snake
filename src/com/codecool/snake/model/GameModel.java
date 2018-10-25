@@ -48,7 +48,7 @@ public class GameModel extends ObservableModel {
 
         switch (type) {
             case SNAKE:
-                entity = new SnakeEntity(50);
+                entity = new SnakeEntity(20);
                 break;
             case ENEMY:
                 entity = new EnemyEntity();
@@ -56,7 +56,7 @@ public class GameModel extends ObservableModel {
                 break;
             case POWERUP:
                 entity = new PowerupEntity();
-                entity.setSpeed(1);
+                entity.setSpeed(0);
                 break;
         }
 
