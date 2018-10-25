@@ -6,6 +6,7 @@ import com.codecool.snake.common.ModelObserver;
 import com.codecool.snake.controller.Controller;
 import com.codecool.snake.model.AbstractGameEntity;
 import com.codecool.snake.model.SnakeEntity;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -54,7 +55,7 @@ public class GameView extends Pane implements ModelObserver {
         Group entity = entitiesOnScene.get(destroyedEntity.toString());
 
         entitiesOnScene.remove(entity);
-        getChildren().remove(entity);
+        Platform.runLater(()->getChildren().remove(entity));
     }
 
     private void attachViewToStage(Stage stage){
