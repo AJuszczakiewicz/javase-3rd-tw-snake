@@ -30,7 +30,7 @@ public class Bounds {
     }
 
     public boolean intersectWith(Bounds otherBounds){
-        if (Math.sqrt( Math.pow(this.x - otherBounds.getY(), 2) + Math.pow(this.y - otherBounds.getY(), 2)) <= this.radius + otherBounds.getRadius())
+        if (Math.sqrt( Math.pow(this.x - otherBounds.getX(), 2) + Math.pow(this.y - otherBounds.getY(), 2)) <= this.radius + otherBounds.getRadius())
             return true;
         return false;
     }
@@ -38,6 +38,9 @@ public class Bounds {
     public void moveTo(int distance, int angle){
         this.x += distance*Math.cos(Math.toRadians(angle));
         this.y += distance*Math.sin(Math.toRadians(angle));
-//        System.out.println("Angle"+angle);
+    }
+
+    public Bounds clone() {
+        return new Bounds(this);
     }
 }

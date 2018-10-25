@@ -8,11 +8,11 @@ public class AbstractGameEntity extends ObservableEntity {
     private boolean alive;
     private Bounds bound;
     private int angle;
-    private int SPEED = 5;
+    private int SPEED = 10;
 
     public AbstractGameEntity() {
         this.alive = true;
-        this.bound = new Bounds(0, 0, 0);
+        this.bound = new Bounds(-100, -100, 0);
         this.angle = 0;
     }
 
@@ -38,17 +38,15 @@ public class AbstractGameEntity extends ObservableEntity {
         this.angle = angle;
     }
 
+    public void setSpeed(int speed) {
+        this.SPEED = speed;
+    }
+
     boolean isAlive() {
         return alive;
     }
 
     void rotate(int rotateBy) {
-//        if(this.angle<-0){
-//            this.angle=360;
-//        }
-//        if(this.angle>360){
-//            this.angle=0;
-//        }
         this.angle += rotateBy;
     }
 

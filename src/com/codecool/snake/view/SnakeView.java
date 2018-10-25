@@ -4,59 +4,57 @@ import com.codecool.snake.common.EntityObserver;
 import com.codecool.snake.model.AbstractGameEntity;
 import com.codecool.snake.model.Bounds;
 import com.codecool.snake.model.SnakeEntity;
-import javafx.collections.ObservableList;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 
-import javax.swing.text.html.HTMLDocument;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.ListIterator;
-import java.util.Optional;
 
 public class SnakeView extends Group implements EntityObserver {
 
-    private Image head;
+    private ImageView head;
     private Image tail;
 
-    private ImageView addTailPart(){
-        ImageView part = new ImageView(tail);
-        getChildren().add(part);
-
-        return part;
-    }
-
     SnakeView(Image costumForHead, Image costumForTail){
-        this.head = costumForHead;
+        this.head = new ImageView(costumForHead);
         this.tail = costumForTail;
 
-        getChildren().add(new ImageView(head));
-        getChildren().add(new ImageView(tail));
+        getChildren().add(this.head);
+        getChildren().get(0).toFront();
     }
 
+    private void setPartBounds(Node part, Bounds bound) {
+        part.setLayoutX(bound.getX());
+        part.setLayoutY(bound.getY());
+    }
+
+
+    public void updateSnakeView(AbstractGameEntity changedEntity) {
+        Iterator<Bounds> snakeBounds = ((SnakeEntity) changedEntity).getSnakeBounds().iterator();
+
+
+        getChildren().listIterator().forEachRemaining(part -> {
+            if(snakeBounds.hasNext()) setPartBounds(part, snakeBounds.next());
+        });
+
+        snakeBounds.forEachRemaining(bound -> {
+            ImageView part = new ImageView(tail);
+
+            getChildren().add(part);
+            //part.toFront();
+        });
+
+        this.head.setRotate(90 + changedEntity.getAngle());
+        //this.head.toFront();
+
+    }
 
     @Override
     public void updateOnChange(AbstractGameEntity changedEntity) {
-        Iterator<Bounds> snakeBounds = ((SnakeEntity) changedEntity).getSnakeBounds().iterator();
-        Iterator<Node> snakeViewParts = getChildren().iterator();
-
-        snakeBounds.forEachRemaining(bound -> {
-            Node snakePart;
-
-            if(snakeViewParts.hasNext()) {
-                snakePart = snakeViewParts.next();
-            }
-            else {
-                snakePart = addTailPart();
-            }
-
-            snakePart.setLayoutX(bound.getX());
-            snakePart.setLayoutY(bound.getY());
-        });
-
-        getChildren().get(0)
-                .setRotate(90+changedEntity.getAngle());
+        Platform.runLater(() -> updateSnakeView(changedEntity));
     }
 }

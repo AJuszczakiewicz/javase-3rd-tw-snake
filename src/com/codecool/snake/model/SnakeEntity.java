@@ -19,10 +19,8 @@ public class SnakeEntity extends AbstractGameEntity {
         super();
         this.setEntityType(GameEntityType.SNAKE);
 
-        for(int i = 1; i <= initialSize; ++i) {
-            Bounds newPart = new Bounds(getBounds());
-            newPart.moveTo(30*i, 0);
-
+        for(int i = initialSize; i > 0; --i) {
+            Bounds newPart = getBounds().clone();
             tail.addLast(newPart);
         }
     }
@@ -49,9 +47,10 @@ public class SnakeEntity extends AbstractGameEntity {
     }
 
     public ArrayList<Bounds> getSnakeBounds(){
-        //TODO
         ArrayList<Bounds> snakeBounds = new ArrayList<>();
         snakeBounds.add(getBounds());
+        snakeBounds.addAll(tail);
+
         return snakeBounds;
     }
 
@@ -74,17 +73,19 @@ public class SnakeEntity extends AbstractGameEntity {
     private void eat(AbstractGameEntity edibleEntity) {
 //        System.out.println("==> Snake eat [" + edibleEntity.getEntityType() + "]");
 
-//        edibleEntity.death();
+        edibleEntity.death();
     }
 
     private void kill(AbstractGameEntity killableEntity) {
 //        System.out.println("==> Snake kill [" + killableEntity.getEntityType() + "]");
 
 
-//        killableEntity.death();
+        killableEntity.death();
     }
 
     public void movement() {
+
+
         switch(turnDirection) {
             case LEFT:
                 rotate(-5);
@@ -92,9 +93,12 @@ public class SnakeEntity extends AbstractGameEntity {
             case RIGHT:
                 rotate(5);
         }
-        tail.pollLast();
-        tail.addFirst(getBounds());
+
+
+        tail.add(getBounds().clone());
+        tail.poll();
         super.movement();
+
     }
 
 

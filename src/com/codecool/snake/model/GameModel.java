@@ -8,6 +8,7 @@ import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public class GameModel extends ObservableModel {
     private List<AbstractGameEntity> gameEntities;
@@ -18,7 +19,7 @@ public class GameModel extends ObservableModel {
     public void initModel() {
         spawnGameObject(GameEntityType.SNAKE);
 
-        for(int i = 0; i < 5; ++i) {
+        for(int i = 0; i < 3; ++i) {
             spawnGameObject(GameEntityType.ENEMY);
             spawnGameObject(GameEntityType.POWERUP);
         }
@@ -49,17 +50,23 @@ public class GameModel extends ObservableModel {
 
         switch (type) {
             case SNAKE:
-                entity = new SnakeEntity(5);
+                entity = new SnakeEntity(50);
                 break;
             case ENEMY:
                 entity = new EnemyEntity();
+                entity.setSpeed(1);
                 break;
             case POWERUP:
                 entity = new PowerupEntity();
+                entity.setSpeed(1);
                 break;
         }
 
         if(entity != null) {
+            Random random = new Random();
+            entity.setBounds(new Bounds(random.nextInt(500) + 250, random.nextInt(350) + 175, 20));
+            entity.setAngle(random.nextInt(360));
+
             gameEntities.add(entity);
             notifyAboutSpawn(entity);
         }
@@ -108,7 +115,7 @@ public class GameModel extends ObservableModel {
 
         for(SnakeEntity snake: snakes) {
             for(AbstractGameEntity entity: entities) {
-                if(snake.isCollideWith(entity)) continue;
+                if(!snake.isCollideWith(entity)) continue;
 
                 snake.interactWith(entity);
             }
