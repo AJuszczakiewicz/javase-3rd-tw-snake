@@ -51,18 +51,24 @@ public class SnakeEntity extends AbstractGameEntity {
     public ArrayList<Bounds> getSnakeBounds(){
         //TODO
         ArrayList<Bounds> snakeBounds = new ArrayList<>();
+        snakeBounds.add(getBounds());
         return snakeBounds;
     }
 
-    void interpretEvent(KeyEvent event) {
-        if (event.getCode() == KeyCode.A) {
+    void interpretPressEvent(KeyEvent event) {
+        if (event.getCode() == KeyCode.LEFT) {
             this.turnDirection = Direction.LEFT;
-            System.out.println("A pressed");
+//            System.out.println("A pressed");
         }
-        if (event.getCode() == KeyCode.S) {
+        if (event.getCode() == KeyCode.RIGHT) {
             this.turnDirection = (Direction.RIGHT);
-            System.out.println("S pressed");
+//            System.out.println("S pressed");
         }
+    }
+
+    void interpretReleaseEvent(KeyEvent event) {
+        this.turnDirection = Direction.CENTER;
+
     }
 
     private void eat(AbstractGameEntity edibleEntity) {
@@ -81,15 +87,11 @@ public class SnakeEntity extends AbstractGameEntity {
     public void movement() {
         switch(turnDirection) {
             case LEFT:
-                rotate(-25);
-                turnDirection = Direction.CENTER;
-                System.out.println("Centered");
+                rotate(-5);
+                break;
             case RIGHT:
-                rotate(25);
-                turnDirection = Direction.CENTER;
-                System.out.println("Centered");
+                rotate(5);
         }
-
         tail.pollLast();
         tail.addFirst(getBounds());
         super.movement();

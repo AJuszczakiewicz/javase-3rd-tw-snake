@@ -43,6 +43,12 @@ public class AbstractGameEntity extends ObservableEntity {
     }
 
     void rotate(int rotateBy) {
+//        if(this.angle<-0){
+//            this.angle=360;
+//        }
+//        if(this.angle>360){
+//            this.angle=0;
+//        }
         this.angle += rotateBy;
     }
 

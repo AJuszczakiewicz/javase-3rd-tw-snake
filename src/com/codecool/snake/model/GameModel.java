@@ -27,7 +27,14 @@ public class GameModel extends ObservableModel {
     public void interpretPressEvent(KeyEvent event) {
         for (AbstractGameEntity gameEntity : gameEntities)
             if (gameEntity.getEntityType().equals(GameEntityType.SNAKE)) {
-                ((SnakeEntity) gameEntity).interpretEvent(event);
+                ((SnakeEntity) gameEntity).interpretPressEvent(event);
+            }
+    }
+
+    public void interpretReleaseEvent(KeyEvent event) {
+        for (AbstractGameEntity gameEntity : gameEntities)
+            if (gameEntity.getEntityType().equals(GameEntityType.SNAKE)) {
+                ((SnakeEntity) gameEntity).interpretReleaseEvent(event);
             }
     }
 

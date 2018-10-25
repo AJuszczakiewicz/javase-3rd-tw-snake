@@ -41,7 +41,7 @@ public class FrameControlLoop extends Thread implements Runnable {
         }
         isRunning = true;
         while (isRunning){
-            int FRAMERATE = 50;
+            int FRAMERATE = 30;
             long timeFrame = 1000/FRAMERATE; //time in miliseconds for one loop
             long currentTime = System.currentTimeMillis();
             counter += (currentTime - initialTime);

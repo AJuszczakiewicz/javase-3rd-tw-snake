@@ -57,6 +57,6 @@ public class SnakeView extends Group implements EntityObserver {
         });
 
         getChildren().get(0)
-                .setRotate(changedEntity.getAngle());
+                .setRotate(90+changedEntity.getAngle());
     }
 }

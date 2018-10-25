@@ -69,6 +69,7 @@ public class GameView extends Pane implements ModelObserver {
 
     public void attachInputToController(Controller controller){
         scene.setOnKeyPressed(controller::handleOnKeyPressed);
+        scene.setOnKeyReleased(controller::handleOnKeyReleased);
 
     }
 

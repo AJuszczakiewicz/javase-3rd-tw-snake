@@ -36,7 +36,8 @@ public class Bounds {
     }
 
     public void moveTo(int distance, int angle){
-        this.x += distance*Math.cos(angle);
-        this.y += distance*Math.sin(angle);
+        this.x += distance*Math.cos(Math.toRadians(angle));
+        this.y += distance*Math.sin(Math.toRadians(angle));
+//        System.out.println("Angle"+angle);
     }
 }

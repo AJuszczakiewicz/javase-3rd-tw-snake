@@ -17,6 +17,9 @@ public class Controller {
     public void handleOnKeyPressed(KeyEvent event){
         model.interpretPressEvent(event);
     }
+    public void handleOnKeyReleased(KeyEvent event){
+        model.interpretReleaseEvent(event);
+    }
 
 
     void updateModel(){
