@@ -45,6 +45,7 @@ public class SnakeView extends Group implements EntityObserver {
             ImageView part = new ImageView(tail);
 
             getChildren().add(part);
+            setPartBounds(part, bound);
             //part.toFront();
         });
 
