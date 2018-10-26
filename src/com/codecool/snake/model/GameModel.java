@@ -10,8 +10,21 @@ import java.util.*;
 
 public class GameModel extends ObservableModel {
     private List<AbstractGameEntity> gameEntities;
+    private int arenaWidth;
+    private int arenaHeight;
+
+
     public GameModel() {
         gameEntities = new ArrayList<>();
+    }
+
+
+    public void setArenaWidth(int width) {
+        arenaWidth = width;
+    }
+
+    public void setArenaHeight(int height) {
+        arenaHeight = height;
     }
 
     public void initModel() {
@@ -94,6 +107,13 @@ public class GameModel extends ObservableModel {
         }
     }
 
+    private boolean isOutOfArenaBounds(AbstractGameEntity entity) {
+        Bounds bound = entity.getBounds();
+
+        return  bound.getX() < 0 || arenaWidth < bound.getX() &&
+                bound.getY() < 0 || arenaHeight < bound.getY();
+    }
+
     private void checkForCollision() {
 //        System.out.println("==> Update model: <check collision>");
 
@@ -113,8 +133,17 @@ public class GameModel extends ObservableModel {
         }
 
         for(SnakeEntity snake: snakes) {
+            if(isOutOfArenaBounds(snake)) {
+                snake.death();
+                continue;
+            }
+
             for(AbstractGameEntity entity: entities) {
-                if(!snake.isCollideWith(entity)) continue;
+                if(isOutOfArenaBounds(entity)) {
+                    entity.death();
+                    continue;
+                }
+                else if(!snake.isCollideWith(entity)) continue;
 
                 snake.interactWith(entity);
             }

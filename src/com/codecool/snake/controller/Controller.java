@@ -21,6 +21,13 @@ public class Controller {
         model.interpretReleaseEvent(event);
     }
 
+    public void changeArenaWidth(int windowWidth) {
+        model.setArenaWidth(windowWidth);
+    }
+
+    public void changeArenaHeight(int height) {
+        model.setArenaHeight(height);
+    }
 
     void updateModel(){
         model.update();

@@ -72,6 +72,15 @@ public class GameView extends Pane implements ModelObserver {
         scene.setOnKeyPressed(controller::handleOnKeyPressed);
         scene.setOnKeyReleased(controller::handleOnKeyReleased);
 
+        controller.changeArenaWidth(WIDTH);
+        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+           controller.changeArenaWidth(newValue.intValue());
+        });
+
+        controller.changeArenaHeight(HEIGHT);
+        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+            controller.changeArenaHeight(newValue.intValue());
+        });
     }
 
     private void loadCostumes(){
