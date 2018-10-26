@@ -110,7 +110,7 @@ public class GameModel extends ObservableModel {
     private boolean isOutOfArenaBounds(AbstractGameEntity entity) {
         Bounds bound = entity.getBounds();
 
-        return  bound.getX() < 0 || arenaWidth < bound.getX() &&
+        return  bound.getX() < 0 || arenaWidth < bound.getX() ||
                 bound.getY() < 0 || arenaHeight < bound.getY();
     }
 
