@@ -5,13 +5,13 @@ public class Bounds {
     private double y;
     private int radius;
 
-    public Bounds(double x, double y, int radius){
+    Bounds(double x, double y, int radius){
         this.radius = radius;
         this.x = x;
         this.y = y;
     }
 
-    public Bounds(Bounds boundsToCopy){
+    private Bounds(Bounds boundsToCopy){
         this.radius = boundsToCopy.getRadius();
         this.x = boundsToCopy.getX();
         this.y = boundsToCopy.getY();
@@ -25,22 +25,20 @@ public class Bounds {
         return (int) y;
     }
 
-    public int getRadius() {
+    private int getRadius() {
         return radius;
     }
 
-    public boolean intersectWith(Bounds otherBounds){
-        if (Math.sqrt( Math.pow(this.x - otherBounds.getX(), 2) + Math.pow(this.y - otherBounds.getY(), 2)) <= this.radius + otherBounds.getRadius())
-            return true;
-        return false;
+    boolean intersectWith(Bounds otherBounds){
+        return Math.sqrt(Math.pow(this.x - otherBounds.getX(), 2) + Math.pow(this.y - otherBounds.getY(), 2)) <= this.radius + otherBounds.getRadius();
     }
 
-    public void moveTo(int distance, int angle){
+    void moveTo(int distance, int angle){
         this.x += distance*Math.cos(Math.toRadians(angle));
         this.y += distance*Math.sin(Math.toRadians(angle));
     }
 
-    public Bounds clone() {
+    Bounds cloneEntity() {
         return new Bounds(this);
     }
 }

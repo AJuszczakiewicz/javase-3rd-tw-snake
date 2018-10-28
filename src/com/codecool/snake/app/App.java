@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import com.codecool.snake.controller.Controller;
+import com.codecool.snake.controller.GameController;
 import com.codecool.snake.controller.FrameControlLoop;
 import com.codecool.snake.model.GameModel;
 import com.codecool.snake.view.GameView;
@@ -25,11 +25,11 @@ public class App extends Application {
         GameView view = new GameView(primaryStage);
 
         model.addObserver(view);
-        model.initModel();
+        model.firstSpawn();
 
-        Controller controller = new Controller(model, view);
+        GameController gameController = new GameController(model, view);
 
-        FrameControlLoop gameLoop = new FrameControlLoop(controller);
+        FrameControlLoop gameLoop = new FrameControlLoop(gameController);
 
         primaryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> gameLoop.stop());
 

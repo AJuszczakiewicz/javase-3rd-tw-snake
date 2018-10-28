@@ -1,11 +1,10 @@
 package com.codecool.snake.model;
 
-import com.codecool.snake.common.GameEntityType;
+import com.codecool.snake.model.common.GameEntityType;
 
-public class EnemyEntity extends AbstractGameEntity {
-    public EnemyEntity(){
+class EnemyEntity extends Entity {
+    EnemyEntity(){
         super();
-
         setEntityType(GameEntityType.ENEMY);
     }
 }

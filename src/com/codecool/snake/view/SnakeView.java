@@ -1,7 +1,7 @@
 package com.codecool.snake.view;
 
-import com.codecool.snake.common.EntityObserver;
-import com.codecool.snake.model.AbstractGameEntity;
+import com.codecool.snake.model.common.EntityObserver;
+import com.codecool.snake.model.Entity;
 import com.codecool.snake.model.Bounds;
 import com.codecool.snake.model.SnakeEntity;
 import javafx.application.Platform;
@@ -11,20 +11,19 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.ListIterator;
 
 public class SnakeView extends Group implements EntityObserver {
+    private int INITIAL_ROTATE = 90;
 
     private ImageView head;
     private Image tail;
 
-    SnakeView(Image costumForHead, Image costumForTail){
-        this.head = new ImageView(costumForHead);
-        this.tail = costumForTail;
+    SnakeView(Image costumeForHead, Image costumeForTail){
+        this.head = new ImageView(costumeForHead);
+        this.tail = costumeForTail;
 
         getChildren().add(this.head);
-        getChildren().get(0).toFront();
+//        getChildren().get(0).toFront();
     }
 
     private void setPartBounds(Node part, Bounds bound) {
@@ -33,7 +32,7 @@ public class SnakeView extends Group implements EntityObserver {
     }
 
 
-    public void updateSnakeView(AbstractGameEntity changedEntity) {
+    private void updateSnakeView(Entity changedEntity) {
         Iterator<Bounds> snakeBounds = ((SnakeEntity) changedEntity).getSnakeBounds().iterator();
 
 
@@ -49,13 +48,12 @@ public class SnakeView extends Group implements EntityObserver {
             //part.toFront();
         });
 
-        this.head.setRotate(90 + changedEntity.getAngle());
+        this.head.setRotate(INITIAL_ROTATE + changedEntity.getAngle());
         //this.head.toFront();
-
     }
 
     @Override
-    public void updateOnChange(AbstractGameEntity changedEntity) {
+    public void updateOnChange(Entity changedEntity) {
         Platform.runLater(() -> updateSnakeView(changedEntity));
     }
 }

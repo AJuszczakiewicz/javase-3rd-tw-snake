@@ -1,8 +1,7 @@
 package com.codecool.snake.view;
 
-import com.codecool.snake.common.EntityObserver;
-import com.codecool.snake.common.GameEntityType;
-import com.codecool.snake.model.AbstractGameEntity;
+import com.codecool.snake.model.common.EntityObserver;
+import com.codecool.snake.model.Entity;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -10,22 +9,18 @@ import javafx.scene.image.ImageView;
 
 public class EntityView extends Group implements EntityObserver {
 
-    private Image head;
-
-    EntityView(Image costumForHead){
-        this.head = costumForHead;
-
-        getChildren().add(new ImageView(head));
+    EntityView(Image costumeForHead){
+        getChildren().add(new ImageView(costumeForHead));
     }
 
-    public void updateEntity(AbstractGameEntity changedEntity) {
+    private void updateEntity(Entity changedEntity) {
         setLayoutX(changedEntity.getBounds().getX());
         setLayoutY(changedEntity.getBounds().getY());
         setRotate(changedEntity.getAngle());
     }
 
     @Override
-    public void updateOnChange(AbstractGameEntity changedEntity) {
-        Platform.runLater(() -> updateEntity(changedEntity));
+    public void updateOnChange(Entity changedEntity) {
+        Platform.runLater(() -> updateEntity(changedEntity)); //Resolves problem with foreign thread making changes in JavaFX
     }
 }

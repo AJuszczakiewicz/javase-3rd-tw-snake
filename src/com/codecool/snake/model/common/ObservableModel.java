@@ -1,6 +1,6 @@
-package com.codecool.snake.common;
+package com.codecool.snake.model.common;
 
-import com.codecool.snake.model.AbstractGameEntity;
+import com.codecool.snake.model.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +14,11 @@ public class ObservableModel {
         }
     }
 
-    public void notifyAboutSpawn(AbstractGameEntity spawnedEntity){
+    public void notifyAboutSpawn(Entity spawnedEntity){
         observators.forEach(modelObserver -> modelObserver.updateOnSpawn(spawnedEntity));
     }
 
-    public void notifyAboutDestroy(AbstractGameEntity destroyedEntity){
+    public void notifyAboutDestroy(Entity destroyedEntity){
         observators.forEach(modelObserver -> modelObserver.updateOnDestroy(destroyedEntity));
     }
 }

@@ -4,11 +4,11 @@ import com.codecool.snake.model.GameModel;
 import com.codecool.snake.view.GameView;
 import javafx.scene.input.KeyEvent;
 
-public class Controller {
+public class GameController {
     private GameView view;
     private GameModel model;
 
-    public Controller(GameModel model, GameView view){
+    public GameController(GameModel model, GameView view){
         this.view = view;
         this.model = model;
         view.attachInputToController(this);
@@ -18,18 +18,10 @@ public class Controller {
         model.interpretPressEvent(event);
     }
     public void handleOnKeyReleased(KeyEvent event){
-        model.interpretReleaseEvent(event);
-    }
-
-    public void changeArenaWidth(int windowWidth) {
-        model.setArenaWidth(windowWidth);
-    }
-
-    public void changeArenaHeight(int height) {
-        model.setArenaHeight(height);
+        model.interpretReleaseEvent();
     }
 
     void updateModel(){
-        model.update();
+        model.updateModel();
     }
 }

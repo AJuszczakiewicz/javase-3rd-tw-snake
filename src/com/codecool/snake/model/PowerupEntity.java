@@ -1,11 +1,10 @@
 package com.codecool.snake.model;
 
-import com.codecool.snake.common.GameEntityType;
+import com.codecool.snake.model.common.GameEntityType;
 
-public class PowerupEntity extends AbstractGameEntity {
-    public PowerupEntity() {
+class PowerupEntity extends Entity {
+    PowerupEntity() {
         super();
-
         setEntityType(GameEntityType.POWERUP);
     }
 }

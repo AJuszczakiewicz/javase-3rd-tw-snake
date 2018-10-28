@@ -1,11 +1,10 @@
 package com.codecool.snake.view;
 
-import com.codecool.snake.common.EntityObserver;
-import com.codecool.snake.common.GameEntityType;
-import com.codecool.snake.common.ModelObserver;
-import com.codecool.snake.controller.Controller;
-import com.codecool.snake.model.AbstractGameEntity;
-import com.codecool.snake.model.SnakeEntity;
+import com.codecool.snake.model.common.EntityObserver;
+import com.codecool.snake.model.common.GameEntityType;
+import com.codecool.snake.model.common.ModelObserver;
+import com.codecool.snake.controller.GameController;
+import com.codecool.snake.model.Entity;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -14,24 +13,22 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.util.HashMap;
 
+import static com.codecool.snake.common.Config.ARENA_HEIGHT;
+import static com.codecool.snake.common.Config.ARENA_WIDTH;
+
 
 public class GameView extends Pane implements ModelObserver {
     private static HashMap<GameEntityType, Image> costumes;
     private HashMap<String, Group> entitiesOnScene = new HashMap<>();
     private Scene scene;
-    private int WIDTH = 1000;
-    private int HEIGHT = 700;
 
     public GameView(Stage primaryStage){
         attachViewToStage(primaryStage);
         loadCostumes();
-
-
     }
 
-
     @Override
-    public void updateOnSpawn(AbstractGameEntity spawnEntity) {
+    public void updateOnSpawn(Entity spawnEntity) {
         Group entity = new Group();
         switch (spawnEntity.getEntityType()){
             case ENEMY:
@@ -44,14 +41,13 @@ public class GameView extends Pane implements ModelObserver {
                 entity = new SnakeView(costumes.get(GameEntityType.SNAKE), costumes.get(GameEntityType.SNAKETAIL));
                 break;
         }
-
         spawnEntity.addObserver((EntityObserver) entity);
         entitiesOnScene.put(spawnEntity.toString(), entity);
         getChildren().add(entity);
     }
 
     @Override
-    public void updateOnDestroy(AbstractGameEntity destroyedEntity) {
+    public void updateOnDestroy(Entity destroyedEntity) {
         Group entity = entitiesOnScene.get(destroyedEntity.toString());
 
         entitiesOnScene.remove(entity);
@@ -59,28 +55,15 @@ public class GameView extends Pane implements ModelObserver {
     }
 
     private void attachViewToStage(Stage stage){
-        scene = new Scene(this, WIDTH, HEIGHT);
+        scene = new Scene(this, ARENA_WIDTH, ARENA_HEIGHT);
 
         stage.setScene(scene);
         stage.show();
-        stage.requestFocus();
-
-
     }
 
-    public void attachInputToController(Controller controller){
-        scene.setOnKeyPressed(controller::handleOnKeyPressed);
-        scene.setOnKeyReleased(controller::handleOnKeyReleased);
-
-        controller.changeArenaWidth(WIDTH);
-        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
-           controller.changeArenaWidth(newValue.intValue());
-        });
-
-        controller.changeArenaHeight(HEIGHT);
-        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
-            controller.changeArenaHeight(newValue.intValue());
-        });
+    public void attachInputToController(GameController gameController){
+        scene.setOnKeyPressed(gameController::handleOnKeyPressed);
+        scene.setOnKeyReleased(gameController::handleOnKeyReleased);
     }
 
     private void loadCostumes(){

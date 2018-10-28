@@ -1,33 +1,22 @@
 package com.codecool.snake.model;
 
-import com.codecool.snake.common.GameEntityType;
-import com.codecool.snake.common.ObservableModel;
-import javafx.application.Platform;
-import javafx.scene.input.KeyCode;
+import com.codecool.snake.model.common.GameEntityType;
+import com.codecool.snake.model.common.ObservableModel;
 import javafx.scene.input.KeyEvent;
 
 import java.util.*;
 
-public class GameModel extends ObservableModel {
-    private List<AbstractGameEntity> gameEntities;
-    private int arenaWidth;
-    private int arenaHeight;
+import static com.codecool.snake.common.Config.*;
 
+public class GameModel extends ObservableModel {
+
+    private List<Entity> gameEntities;
 
     public GameModel() {
         gameEntities = new ArrayList<>();
     }
 
-
-    public void setArenaWidth(int width) {
-        arenaWidth = width;
-    }
-
-    public void setArenaHeight(int height) {
-        arenaHeight = height;
-    }
-
-    public void initModel() {
+    public void firstSpawn() {
         spawnGameObject(GameEntityType.SNAKE);
 
         for(int i = 0; i < 3; ++i) {
@@ -36,70 +25,16 @@ public class GameModel extends ObservableModel {
         }
     }
 
-    public void interpretPressEvent(KeyEvent event) {
-        for (AbstractGameEntity gameEntity : gameEntities)
-            if (gameEntity.getEntityType().equals(GameEntityType.SNAKE)) {
-                ((SnakeEntity) gameEntity).interpretPressEvent(event);
-            }
-    }
-
-    public void interpretReleaseEvent(KeyEvent event) {
-        for (AbstractGameEntity gameEntity : gameEntities)
-            if (gameEntity.getEntityType().equals(GameEntityType.SNAKE)) {
-                ((SnakeEntity) gameEntity).interpretReleaseEvent(event);
-            }
-    }
-
-
-    List<AbstractGameEntity> getAllGameEntities() {
-        //TODO
-        return null;
-    }
-
-    private void spawnGameObject(GameEntityType type) {
-        AbstractGameEntity entity = null;
-
-        switch (type) {
-            case SNAKE:
-                entity = new SnakeEntity(20);
-                break;
-            case ENEMY:
-                entity = new EnemyEntity();
-                entity.setSpeed(1);
-                break;
-            case POWERUP:
-                entity = new PowerupEntity();
-                entity.setSpeed(0);
-                break;
-        }
-
-        if(entity != null) {
-            Random random = new Random();
-            entity.setBounds(new Bounds(random.nextInt(500) + 250, random.nextInt(350) + 175, 20));
-            entity.setAngle(random.nextInt(360));
-
-            gameEntities.add(entity);
-            notifyAboutSpawn(entity);
-        }
-    }
-
-    private void removeGameObject(AbstractGameEntity entityToRemove) {
-        notifyAboutDestroy(entityToRemove);
-    }
-
-
-    private void moveAll() {
-//        System.out.println("==> Update model: <move all entities>");
-
-        for (AbstractGameEntity entity:  gameEntities) {
-            entity.movement();
-        }
+    public void updateModel(){
+        cleanDeathEntities();
+        checkForCollision();
+        moveAll();
     }
 
     private void cleanDeathEntities() {
-        ListIterator<AbstractGameEntity> entitiesIterator = gameEntities.listIterator();
+        ListIterator<Entity> entitiesIterator = gameEntities.listIterator();
         while(entitiesIterator.hasNext()){
-            AbstractGameEntity entity = entitiesIterator.next();
+            Entity entity = entitiesIterator.next();
             if(!entity.isAlive()){
                 entitiesIterator.remove();
                 removeGameObject(entity);
@@ -107,21 +42,13 @@ public class GameModel extends ObservableModel {
         }
     }
 
-    private boolean isOutOfArenaBounds(AbstractGameEntity entity) {
-        Bounds bound = entity.getBounds();
-
-        return  bound.getX() < 0 || arenaWidth < bound.getX() ||
-                bound.getY() < 0 || arenaHeight < bound.getY();
-    }
-
     private void checkForCollision() {
-//        System.out.println("==> Update model: <check collision>");
 
         // filter list
-        ArrayList<AbstractGameEntity> entities = new ArrayList<>();
+        ArrayList<Entity> entities = new ArrayList<>();
         ArrayList<SnakeEntity> snakes = new ArrayList<>();
 
-        for(AbstractGameEntity entity : gameEntities) {
+        for(Entity entity : gameEntities) {
             switch (entity.getEntityType()) {
                 case SNAKE:
                     snakes.add((SnakeEntity) entity);
@@ -138,7 +65,7 @@ public class GameModel extends ObservableModel {
                 continue;
             }
 
-            for(AbstractGameEntity entity: entities) {
+            for(Entity entity: entities) {
                 if(isOutOfArenaBounds(entity)) {
                     entity.death();
                     continue;
@@ -150,12 +77,69 @@ public class GameModel extends ObservableModel {
         }
     }
 
-    long startTime = System.currentTimeMillis();
-    int iterations = 0;
-    public void update(){
-        cleanDeathEntities();
-        checkForCollision();
-        moveAll();
+    private void moveAll() {
+
+        for (Entity entity:  gameEntities) {
+            entity.movement();
+        }
+    }
+
+    private void spawnGameObject(GameEntityType type) {
+        Entity entity = null;
+
+        switch (type) {
+            case SNAKE:
+                entity = new SnakeEntity(INITIAL_SNAKE_SIZE);
+                break;
+            case ENEMY:
+                entity = new EnemyEntity();
+                entity.setSpeed(ENEMY_SPEED);
+                break;
+            case POWERUP:
+                entity = new PowerupEntity();
+                entity.setSpeed(POWERUP_SPEED);
+                break;
+            case SNAKETAIL:
+                break;
+            default:
+                entity = new EnemyEntity();
+                entity.setSpeed(ENEMY_SPEED);
+                break;
+        }
+
+        if(entity != null) {
+            Random random = new Random();
+            entity.setBounds(new Bounds(random.nextInt(500) + 250, random.nextInt(350) + 175, 20));
+            entity.setAngle(random.nextInt(360));
+
+            gameEntities.add(entity);
+            notifyAboutSpawn(entity);
+        }
+    }
+
+    private void removeGameObject(Entity entityToRemove) {
+        notifyAboutDestroy(entityToRemove);
+    }
+
+    private boolean isOutOfArenaBounds(Entity entity) {
+        Bounds bound = entity.getBounds();
+
+        return  bound.getX() < 0 || ARENA_WIDTH < bound.getX() ||
+                bound.getY() < 0 || ARENA_HEIGHT < bound.getY();
+    }
+
+    public void interpretPressEvent(KeyEvent event) {
+        for (Entity gameEntity : gameEntities)
+            if (gameEntity.getEntityType().equals(GameEntityType.SNAKE)) {
+                ((SnakeEntity) gameEntity).interpretPressEvent(event);
+            }
+    }
+
+    public void interpretReleaseEvent() {
+        for (Entity gameEntity : gameEntities)
+            if (gameEntity.getEntityType().equals(GameEntityType.SNAKE)) {
+                ((SnakeEntity) gameEntity).interpretReleaseEvent();
+            }
     }
 
 

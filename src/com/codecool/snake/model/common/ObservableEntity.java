@@ -1,9 +1,8 @@
-package com.codecool.snake.common;
+package com.codecool.snake.model.common;
 
-import com.codecool.snake.model.AbstractGameEntity;
+import com.codecool.snake.model.Entity;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ObservableEntity {
@@ -15,7 +14,7 @@ public class ObservableEntity {
         }
     }
 
-    public void notifyAboutChange(AbstractGameEntity changedEntity) {
+    public void notifyAboutChange(Entity changedEntity) {
         observers.forEach(entityObserver -> entityObserver.updateOnChange(changedEntity));
     }
 }

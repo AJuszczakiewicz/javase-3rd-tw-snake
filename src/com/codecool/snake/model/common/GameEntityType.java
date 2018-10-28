@@ -1,4 +1,4 @@
-package com.codecool.snake.common;
+package com.codecool.snake.model.common;
 
 public enum GameEntityType {
     SNAKE, POWERUP, ENEMY, SNAKETAIL
