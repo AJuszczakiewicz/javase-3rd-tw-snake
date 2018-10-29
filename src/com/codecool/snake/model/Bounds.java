@@ -2,8 +2,6 @@ package com.codecool.snake.model;
 
 import com.codecool.snake.common.Config;
 
-import java.util.Random;
-
 public class Bounds {
     private double x;
     private double y;
@@ -50,7 +48,7 @@ public class Bounds {
         int x = Config.RANDOMIZER.apply(Config.ARENA_WIDTH);
         int y = Config.RANDOMIZER.apply(Config.ARENA_HEIGHT);
 
-        return new Bounds(x, y, Config.HITBOX);
+        return new Bounds(x, y, Config.HIT_BOX);
 
 
     }

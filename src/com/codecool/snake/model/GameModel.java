@@ -10,9 +10,8 @@ import javafx.scene.input.KeyEvent;
 
 import java.util.*;
 
-import static com.codecool.snake.common.Config.*;
-
 public class GameModel extends ObservableModel {
+    private final int FULL_ANGLE = 360;
 
     private List<Entity> gameEntities;
 
@@ -93,27 +92,27 @@ public class GameModel extends ObservableModel {
 
         switch (type) {
             case SNAKE:
-                entity = new SnakeEntity(INITIAL_SNAKE_SIZE);
+                entity = new SnakeEntity(Config.INITIAL_SNAKE_SIZE);
                 break;
             case ENEMY:
                 entity = new EnemyEntity();
-                entity.setSpeed(ENEMY_SPEED);
+                entity.setSpeed(Config.ENEMY_SPEED);
                 break;
             case POWERUP:
                 entity = new PowerupEntity();
-                entity.setSpeed(POWERUP_SPEED);
+                entity.setSpeed(Config.POWERUP_SPEED);
                 break;
             case SNAKETAIL:
                 break;
             default:
                 entity = new EnemyEntity();
-                entity.setSpeed(ENEMY_SPEED);
+                entity.setSpeed(Config.ENEMY_SPEED);
                 break;
         }
 
         if(entity != null) {
             entity.setBounds(Bounds.getRandomBound());
-            entity.setAngle(Config.RANDOMIZER.apply(Config.FULLANGLE));
+            entity.setAngle(Config.RANDOMIZER.apply(FULL_ANGLE));
 
             gameEntities.add(entity);
             notifyAboutSpawn(entity);
@@ -127,8 +126,8 @@ public class GameModel extends ObservableModel {
     private boolean isOutOfArenaBounds(Entity entity) {
         Bounds bound = entity.getBounds();
 
-        return  bound.getX() < 0 || ARENA_WIDTH < bound.getX() ||
-                bound.getY() < 0 || ARENA_HEIGHT < bound.getY();
+        return  bound.getX() < 0 || Config.ARENA_WIDTH < bound.getX() ||
+                bound.getY() < 0 || Config.ARENA_HEIGHT < bound.getY();
     }
 
     public void interpretPressEvent(KeyEvent event) {

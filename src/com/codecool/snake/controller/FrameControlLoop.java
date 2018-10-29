@@ -1,7 +1,5 @@
 package com.codecool.snake.controller;
 
-import java.util.function.Function;
-
 import static com.codecool.snake.common.Config.FRAME_RATE;
 
 public class FrameControlLoop extends Thread implements Runnable {

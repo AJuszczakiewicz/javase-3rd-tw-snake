@@ -1,5 +1,6 @@
 package com.codecool.snake.view;
 
+import com.codecool.snake.common.Config;
 import com.codecool.snake.model.common.EntityObserver;
 import com.codecool.snake.model.common.GameEntityType;
 import com.codecool.snake.model.common.ModelObserver;
@@ -16,9 +17,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.util.HashMap;
-
-import static com.codecool.snake.common.Config.ARENA_HEIGHT;
-import static com.codecool.snake.common.Config.ARENA_WIDTH;
 
 
 public class GameView extends Pane implements ModelObserver {
@@ -59,7 +57,7 @@ public class GameView extends Pane implements ModelObserver {
     }
 
     private void attachViewToStage(Stage stage){
-        scene = new Scene(this, ARENA_WIDTH, ARENA_HEIGHT);
+        scene = new Scene(this, Config.ARENA_WIDTH, Config.ARENA_HEIGHT);
 
         stage.setScene(scene);
         stage.show();

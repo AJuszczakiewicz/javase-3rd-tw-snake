@@ -1,13 +1,10 @@
 package com.codecool.snake.app;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
 import com.codecool.snake.controller.GameController;
-import com.codecool.snake.controller.FrameControlLoop;
 import com.codecool.snake.model.GameModel;
 import com.codecool.snake.view.GameView;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 public class App extends Application {
 
