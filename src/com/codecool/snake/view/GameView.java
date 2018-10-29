@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
 import java.util.HashMap;
 
 import static com.codecool.snake.common.Config.ARENA_HEIGHT;
@@ -66,6 +68,7 @@ public class GameView extends Pane implements ModelObserver {
     public void attachInputToController(GameController gameController){
         scene.setOnKeyPressed(gameController::handleOnKeyPressed);
         scene.setOnKeyReleased(gameController::handleOnKeyReleased);
+        scene.getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> gameController.handleOnAppClose());
     }
 
     private void loadCostumes(){

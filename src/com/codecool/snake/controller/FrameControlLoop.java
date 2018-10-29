@@ -1,10 +1,12 @@
 package com.codecool.snake.controller;
 
+import java.util.function.Function;
+
 import static com.codecool.snake.common.Config.FRAME_RATE;
 
 public class FrameControlLoop extends Thread implements Runnable {
 
-    private GameController gameController;
+    private Runnable updater;
 
     private boolean isRunning = false;
 
@@ -16,8 +18,8 @@ public class FrameControlLoop extends Thread implements Runnable {
             timeCounterMs = 0, //milliseconds counter
             currentTime  = System.currentTimeMillis();
 
-    public FrameControlLoop(GameController controller) {
-        this.gameController = controller;
+    public FrameControlLoop(Runnable updater) {
+        this.updater = updater;
     }
 
     public void run() {
@@ -29,7 +31,7 @@ public class FrameControlLoop extends Thread implements Runnable {
             initialTime = currentTime;
 
             if (timeCounterMs >= timeFrame) {
-                gameController.updateModel();
+                updater.run();
                 tics += 1;
                 timeCounterMs = 0;
             }

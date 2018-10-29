@@ -19,21 +19,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Snake");
-
         GameView view = new GameView(primaryStage);
         GameModel model = new GameModel();
         model.addObserver(view);
 
         GameController gameController = new GameController(model, view);
-
-        FrameControlLoop gameLoop = new FrameControlLoop(gameController);
-
-        primaryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> gameLoop.stop());
-
-        gameLoop.setDaemon(true);
-        gameLoop.start();
-
     }
 
 }
