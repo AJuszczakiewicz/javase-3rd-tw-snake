@@ -11,7 +11,9 @@ public class GameController {
     public GameController(GameModel model, GameView view){
         this.view = view;
         this.model = model;
+
         view.attachInputToController(this);
+        model.firstSpawn();
     }
 
     public void handleOnKeyPressed(KeyEvent event){

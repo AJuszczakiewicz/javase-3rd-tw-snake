@@ -1,5 +1,8 @@
-package com.codecool.snake.model;
+package com.codecool.snake.model.entities;
 
+import com.codecool.snake.model.Bounds;
+import com.codecool.snake.model.Direction;
+import com.codecool.snake.model.Entity;
 import com.codecool.snake.model.common.GameEntityType;
 
 import javafx.scene.input.KeyCode;
@@ -15,12 +18,12 @@ public class SnakeEntity extends Entity {
     private Deque<Bounds> tail = new ArrayDeque<>();
     private Direction turnDirection = Direction.CENTER;
 
-    SnakeEntity(int initialSize) {
+    public SnakeEntity(int initialSize) {
         super();
         this.setEntityType(GameEntityType.SNAKE);
 
         for(int i = initialSize; i > 0; --i) {
-            Bounds newPart = getBounds().cloneEntity();
+            Bounds newPart = getBounds().cloneBound();
             tail.addLast(newPart);
         }
     }
@@ -38,16 +41,16 @@ public class SnakeEntity extends Entity {
                 break;
         }
 
-        tail.add(getBounds().cloneEntity());
+        tail.add(getBounds().cloneBound());
         tail.poll();
         super.movement();
     }
 
-    boolean isCollideWith(Entity collider) {
+    public boolean isCollideWith(Entity collider) {
         return collider.getBounds().intersectWith(this.getBounds());
     }
 
-    void interactWith(Entity otherGameObject) {
+    public void interactWith(Entity otherGameObject) {
 
         switch (otherGameObject.getEntityType()) {
             case POWERUP:
@@ -62,6 +65,7 @@ public class SnakeEntity extends Entity {
     private void eat(Entity edibleEntity) {
         System.out.println("==> Snake eat [" + edibleEntity.getEntityType() + "]");
 
+        tail.addFirst(getBounds().cloneBound());
         edibleEntity.death();
     }
 
@@ -79,7 +83,7 @@ public class SnakeEntity extends Entity {
         return snakeBounds;
     }
 
-    void interpretPressEvent(KeyEvent event) {
+    public void interpretPressEvent(KeyEvent event) {
         if (event.getCode() == KeyCode.LEFT) {
             this.turnDirection = Direction.LEFT;
         }
@@ -89,7 +93,7 @@ public class SnakeEntity extends Entity {
         }
     }
 
-    void interpretReleaseEvent() {
+    public void interpretReleaseEvent() {
         this.turnDirection = Direction.CENTER;
     }
 

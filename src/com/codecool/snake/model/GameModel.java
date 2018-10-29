@@ -1,7 +1,11 @@
 package com.codecool.snake.model;
 
+import com.codecool.snake.common.Config;
 import com.codecool.snake.model.common.GameEntityType;
 import com.codecool.snake.model.common.ObservableModel;
+import com.codecool.snake.model.entities.EnemyEntity;
+import com.codecool.snake.model.entities.PowerupEntity;
+import com.codecool.snake.model.entities.SnakeEntity;
 import javafx.scene.input.KeyEvent;
 
 import java.util.*;
@@ -108,9 +112,8 @@ public class GameModel extends ObservableModel {
         }
 
         if(entity != null) {
-            Random random = new Random();
-            entity.setBounds(new Bounds(random.nextInt(500) + 250, random.nextInt(350) + 175, 20));
-            entity.setAngle(random.nextInt(360));
+            entity.setBounds(Bounds.getRandomBound());
+            entity.setAngle(Config.RANDOMIZER.apply(Config.FULLANGLE));
 
             gameEntities.add(entity);
             notifyAboutSpawn(entity);
@@ -141,6 +144,4 @@ public class GameModel extends ObservableModel {
                 ((SnakeEntity) gameEntity).interpretReleaseEvent();
             }
     }
-
-
 }

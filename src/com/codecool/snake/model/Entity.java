@@ -36,27 +36,27 @@ public class Entity extends ObservableEntity {
         return this.angle;
     }
 
-    void setEntityType(GameEntityType entityType) {
+    public void setEntityType(GameEntityType entityType) {
         this.entityType = entityType;
     }
 
-    void setBounds(Bounds newBounds) {
+    public void setBounds(Bounds newBounds) {
         this.bound = newBounds;
     }
 
-    void setAngle(int angle) {
+    public void setAngle(int angle) {
         this.angle = angle;
     }
 
-    void setSpeed(int speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 
-    boolean isAlive() {
+    public boolean isAlive() {
         return alive;
     }
 
-    void rotate(int rotateBy) {
+    public void rotate(int rotateBy) {
         this.angle += rotateBy;
     }
 
@@ -65,7 +65,7 @@ public class Entity extends ObservableEntity {
         notifyAboutChange(this);
     }
 
-    void death() {
+    public void death() {
         System.out.println("==> ... Death of " + entityType);
         this.alive = false;
     }

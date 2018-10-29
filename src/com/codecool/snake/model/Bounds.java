@@ -1,17 +1,21 @@
 package com.codecool.snake.model;
 
+import com.codecool.snake.common.Config;
+
+import java.util.Random;
+
 public class Bounds {
     private double x;
     private double y;
     private int radius;
 
-    Bounds(double x, double y, int radius){
+    public Bounds(double x, double y, int radius){
         this.radius = radius;
         this.x = x;
         this.y = y;
     }
 
-    private Bounds(Bounds boundsToCopy){
+    public Bounds(Bounds boundsToCopy){
         this.radius = boundsToCopy.getRadius();
         this.x = boundsToCopy.getX();
         this.y = boundsToCopy.getY();
@@ -25,20 +29,29 @@ public class Bounds {
         return (int) y;
     }
 
-    private int getRadius() {
+    public int getRadius() {
         return radius;
     }
 
-    boolean intersectWith(Bounds otherBounds){
+    public boolean intersectWith(Bounds otherBounds){
         return Math.sqrt(Math.pow(this.x - otherBounds.getX(), 2) + Math.pow(this.y - otherBounds.getY(), 2)) <= this.radius + otherBounds.getRadius();
     }
 
-    void moveTo(int distance, int angle){
+    public void moveTo(int distance, int angle){
         this.x += distance*Math.cos(Math.toRadians(angle));
         this.y += distance*Math.sin(Math.toRadians(angle));
     }
 
-    Bounds cloneEntity() {
+    public Bounds cloneBound() {
         return new Bounds(this);
+    }
+
+    public static Bounds getRandomBound() {
+        int x = Config.RANDOMIZER.apply(Config.ARENA_WIDTH);
+        int y = Config.RANDOMIZER.apply(Config.ARENA_HEIGHT);
+
+        return new Bounds(x, y, Config.HITBOX);
+
+
     }
 }

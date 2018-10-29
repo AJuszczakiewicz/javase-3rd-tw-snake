@@ -5,6 +5,8 @@ import com.codecool.snake.model.common.GameEntityType;
 import com.codecool.snake.model.common.ModelObserver;
 import com.codecool.snake.controller.GameController;
 import com.codecool.snake.model.Entity;
+import com.codecool.snake.view.entities.EntityView;
+import com.codecool.snake.view.entities.SnakeView;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;

@@ -21,11 +21,9 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Snake");
 
-        GameModel model = new GameModel();
         GameView view = new GameView(primaryStage);
-
+        GameModel model = new GameModel();
         model.addObserver(view);
-        model.firstSpawn();
 
         GameController gameController = new GameController(model, view);
 
