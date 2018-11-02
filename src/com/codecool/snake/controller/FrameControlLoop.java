@@ -1,64 +1,54 @@
 package com.codecool.snake.controller;
 
+import static com.codecool.snake.common.Config.FRAME_RATE;
 
-public class FrameControlLoop implements Runnable {
-    private Controller controller;
+public class FrameControlLoop extends Thread implements Runnable {
+
+    private Runnable updater;
 
     private boolean isRunning = false;
-    private long counter = 0;
+
     private int tics = 0; //For FPS Debugging
-    private long initialTime = System.currentTimeMillis();
-    private long startTime = System.currentTimeMillis();
-    private boolean iddle = false;
 
+    private long initialTime  = System.currentTimeMillis(), //time for Loop Control
+            startTime  = System.currentTimeMillis(), //initial time for FPS drawing
+            timeFrame = 1000/ FRAME_RATE, //time in milliseconds for one loop;
+            timeCounterMs = 0, //milliseconds counter
+            currentTime  = System.currentTimeMillis();
 
-    public FrameControlLoop(Controller controller) {
-        this.controller = controller;
+    FrameControlLoop(Runnable updater) {
+        this.updater = updater;
     }
-
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    public boolean isStopped() {
-        return !isRunning;
-    }
-
-    public void makeIdle() {
-        //TODO
-        iddle = !iddle;
-    }
-
-    public void stop() {
-        isRunning = false;
-    }
-
-
 
     public void run() {
+
         isRunning = true;
         while (isRunning){
-            int FRAMERATE = 30;
-            long timeFrame = 1000/FRAMERATE; //time in miliseconds for one loop
-            long currentTime = System.currentTimeMillis();
-            counter += (currentTime - initialTime);
+            currentTime = System.currentTimeMillis();
+            timeCounterMs += (currentTime - initialTime);
             initialTime = currentTime;
 
-            if (counter >= timeFrame) {
-
-                if (!iddle){
-                    controller.updateModel();
-                    tics += 1;
-                    counter = 0;
-                }
+            if (timeCounterMs >= timeFrame) {
+                updater.run();
+                tics += 1;
+                timeCounterMs = 0;
             }
+            try {
+                Thread.sleep(timeFrame - timeCounterMs);
+            } catch (InterruptedException e) {
+            }
+            //if statement for FPS loging in console=========
             if (currentTime-startTime>1000){
                 System.out.println("FPS: "+tics);
                 startTime = System.currentTimeMillis();
                 tics = 0;
             }
 
+            //===============================================
         }
+    }
 
+    void toggleLoopState() {
+        isRunning = !isRunning;
     }
 }

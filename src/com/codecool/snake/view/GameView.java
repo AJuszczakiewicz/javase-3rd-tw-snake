@@ -1,39 +1,38 @@
 package com.codecool.snake.view;
 
-import com.codecool.snake.common.EntityObserver;
-import com.codecool.snake.common.GameEntityType;
-import com.codecool.snake.common.ModelObserver;
-import com.codecool.snake.controller.Controller;
-import com.codecool.snake.model.AbstractGameEntity;
+import com.codecool.snake.common.Config;
+import com.codecool.snake.controller.GameController;
+import com.codecool.snake.model.Entity;
+import com.codecool.snake.model.common.EntityObserver;
+import com.codecool.snake.model.common.GameEntityType;
+import com.codecool.snake.model.common.ModelObserver;
+import com.codecool.snake.view.entities.EntityView;
+import com.codecool.snake.view.entities.SnakeView;
+import javafx.application.Platform;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.util.HashMap;
-import java.util.Map;
+
 
 public class GameView extends Pane implements ModelObserver {
     private static HashMap<GameEntityType, Image> costumes;
     private HashMap<String, Group> entitiesOnScene = new HashMap<>();
     private Scene scene;
-    private int WIDTH = 1000;
-    private int HEIGHT = 700;
 
     public GameView(Stage primaryStage){
         attachViewToStage(primaryStage);
         loadCostumes();
     }
 
-
     @Override
-    public void updateOnSpawn(AbstractGameEntity spawnEntity) {
+    public void updateOnSpawn(Entity createdEntity) {
         Group entity = new Group();
-
-        switch (spawnEntity.getGameEntityType()){
+        switch (createdEntity.getEntityType()) {
             case ENEMY:
                 entity = new EntityView(costumes.get(GameEntityType.ENEMY));
                 break;
@@ -44,29 +43,30 @@ public class GameView extends Pane implements ModelObserver {
                 entity = new SnakeView(costumes.get(GameEntityType.SNAKE), costumes.get(GameEntityType.SNAKETAIL));
                 break;
         }
-
-        spawnEntity.addObserver((EntityObserver) entity);
-        entitiesOnScene.put(spawnEntity.toString(), entity);
+        createdEntity.addObserver((EntityObserver) entity);
+        entitiesOnScene.put(createdEntity.toString(), entity);
         getChildren().add(entity);
     }
 
     @Override
-    public void updateOnDestroy(AbstractGameEntity destroyedEntity) {
+    public void updateOnDestroy(Entity destroyedEntity) {
         Group entity = entitiesOnScene.get(destroyedEntity.toString());
 
         entitiesOnScene.remove(entity);
-        getChildren().remove(entity);
+        Platform.runLater(()->getChildren().remove(entity));
     }
 
     private void attachViewToStage(Stage stage){
-        scene = new Scene(this, WIDTH, HEIGHT);
+        scene = new Scene(this, Config.ARENA_WIDTH, Config.ARENA_HEIGHT);
 
         stage.setScene(scene);
         stage.show();
     }
 
-    public void attachInputToController(Controller controller){
-        //TODO
+    public void attachInputToController(GameController gameController){
+        scene.setOnKeyPressed(gameController::handleOnKeyPressed);
+        scene.setOnKeyReleased(gameController::handleOnKeyReleased);
+        scene.getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> gameController.handleOnAppClose());
     }
 
     private void loadCostumes(){

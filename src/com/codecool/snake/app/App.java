@@ -1,34 +1,26 @@
 package com.codecool.snake.app;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
-import com.codecool.snake.controller.Controller;
-import com.codecool.snake.controller.FrameControlLoop;
+import com.codecool.snake.controller.GameController;
 import com.codecool.snake.model.GameModel;
 import com.codecool.snake.view.GameView;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 public class App extends Application {
 
 
     public static void main(String[] args) {
         launch(args);
-
     }
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Snake");
-
-        GameModel model = new GameModel();
         GameView view = new GameView(primaryStage);
-        Controller controller = new Controller(model, view);
-        FrameControlLoop gameLoop = new FrameControlLoop(controller);
+        GameModel model = new GameModel();
+        model.addObserver(view);
 
-        primaryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> gameLoop.stop());
-        (new Thread(gameLoop)).start();
-
+        GameController gameController = new GameController(model, view);
+        gameController.startLoop();
     }
 
 }
