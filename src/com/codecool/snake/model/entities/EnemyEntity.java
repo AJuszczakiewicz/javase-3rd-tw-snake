@@ -4,7 +4,7 @@ import com.codecool.snake.model.Entity;
 import com.codecool.snake.model.common.GameEntityType;
 
 public class EnemyEntity extends Entity {
-    public EnemyEntity(){
+    public EnemyEntity() {
         super();
         setEntityType(GameEntityType.ENEMY);
     }

@@ -28,6 +28,10 @@ public class Entity extends ObservableEntity {
         return entityType;
     }
 
+    protected void setEntityType(GameEntityType entityType) {
+        this.entityType = entityType;
+    }
+
     public Shape getShape() {
         return this.bound;
     }
@@ -36,16 +40,12 @@ public class Entity extends ObservableEntity {
         return this.angle;
     }
 
-    protected void setEntityType(GameEntityType entityType) {
-        this.entityType = entityType;
+    void setAngle(int angle) {
+        this.angle = angle;
     }
 
     void setBounds(Shape newShape) {
         this.bound = newShape;
-    }
-
-    void setAngle(int angle) {
-        this.angle = angle;
     }
 
     void setSpeed(int speed) {

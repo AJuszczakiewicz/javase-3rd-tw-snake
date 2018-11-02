@@ -18,7 +18,7 @@ public class SnakeView extends Group implements EntityObserver {
     private ImageView head;
     private Image tail;
 
-    public SnakeView(Image costumeForHead, Image costumeForTail){
+    public SnakeView(Image costumeForHead, Image costumeForTail) {
         this.head = new ImageView(costumeForHead);
         this.tail = costumeForTail;
 
@@ -38,7 +38,7 @@ public class SnakeView extends Group implements EntityObserver {
 
 
             getChildren().listIterator().forEachRemaining(part -> {
-                if(snakeBounds.hasNext()) setPartBounds(part, snakeBounds.next());
+                if (snakeBounds.hasNext()) setPartBounds(part, snakeBounds.next());
             });
 
             snakeBounds.forEachRemaining(bound -> {

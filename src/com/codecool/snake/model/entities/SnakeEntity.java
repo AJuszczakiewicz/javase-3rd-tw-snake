@@ -24,7 +24,7 @@ public class SnakeEntity extends Entity {
         super();
         this.setEntityType(GameEntityType.SNAKE);
 
-        for(int i = initialSize; i > 0; --i) {
+        for (int i = initialSize; i > 0; --i) {
             Shape newPart = getShape().cloneShape();
             tail.addLast(newPart);
         }
@@ -32,7 +32,7 @@ public class SnakeEntity extends Entity {
 
     public void movement() {
 
-        switch(turnDirection) {
+        switch (turnDirection) {
             case LEFT:
                 rotate(-ROTATE_SPEED);
                 break;

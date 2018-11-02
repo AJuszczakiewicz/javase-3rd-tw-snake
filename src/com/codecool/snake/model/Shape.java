@@ -19,14 +19,6 @@ public class Shape {
         this.y = shapeToCopy.getY();
     }
 
-    public int getX() {
-        return (int) x;
-    }
-
-    public int getY() {
-        return (int) y;
-    }
-
     static Shape getRandomBound() {
         int x = Config.RANDOMIZER.apply(Config.ARENA_WIDTH);
         int y = Config.RANDOMIZER.apply(Config.ARENA_HEIGHT);
@@ -36,13 +28,21 @@ public class Shape {
 
     }
 
+    public int getX() {
+        return (int) x;
+    }
+
+    public int getY() {
+        return (int) y;
+    }
+
     private int getRadius() {
         return radius;
     }
 
     void moveTo(int distance, int angle) {
-        this.x += distance*Math.cos(Math.toRadians(angle));
-        this.y += distance*Math.sin(Math.toRadians(angle));
+        this.x += distance * Math.cos(Math.toRadians(angle));
+        this.y += distance * Math.sin(Math.toRadians(angle));
     }
 
     public boolean intersectWith(Shape otherShape) {

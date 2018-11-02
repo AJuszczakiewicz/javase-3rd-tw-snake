@@ -24,13 +24,13 @@ public class GameModel extends ObservableModel {
     public void firstSpawn() {
         spawnGameObject(GameEntityType.SNAKE);
 
-        for(int i = 0; i < 3; ++i) {
+        for (int i = 0; i < 5; ++i) {
             spawnGameObject(GameEntityType.ENEMY);
             spawnGameObject(GameEntityType.POWERUP);
         }
     }
 
-    public void updateModel(){
+    public void updateModel() {
         cleanDeathEntities();
         checkForCollision();
         moveAll();
@@ -38,9 +38,9 @@ public class GameModel extends ObservableModel {
 
     private void cleanDeathEntities() {
         ListIterator<Entity> entitiesIterator = gameEntities.listIterator();
-        while(entitiesIterator.hasNext()){
+        while (entitiesIterator.hasNext()) {
             Entity entity = entitiesIterator.next();
-            if(!entity.isAlive()){
+            if (!entity.isAlive()) {
                 entitiesIterator.remove();
                 removeGameObject(entity);
             }
@@ -53,7 +53,7 @@ public class GameModel extends ObservableModel {
         ArrayList<Entity> entities = new ArrayList<>();
         ArrayList<SnakeEntity> snakes = new ArrayList<>();
 
-        for(Entity entity : gameEntities) {
+        for (Entity entity : gameEntities) {
             switch (entity.getEntityType()) {
                 case SNAKE:
                     snakes.add((SnakeEntity) entity);
@@ -64,18 +64,17 @@ public class GameModel extends ObservableModel {
             }
         }
 
-        for(SnakeEntity snake: snakes) {
-            if(isOutOfArenaBounds(snake)) {
+        for (SnakeEntity snake : snakes) {
+            if (isOutOfArenaBounds(snake)) {
                 snake.death();
                 continue;
             }
 
-            for(Entity entity: entities) {
-                if(isOutOfArenaBounds(entity)) {
+            for (Entity entity : entities) {
+                if (isOutOfArenaBounds(entity)) {
                     entity.death();
                     continue;
-                }
-                else if(!snake.isCollideWith(entity)) continue;
+                } else if (!snake.isCollideWith(entity)) continue;
 
                 snake.interactWith(entity);
             }
@@ -84,7 +83,7 @@ public class GameModel extends ObservableModel {
 
     private void moveAll() {
 
-        for (Entity entity:  gameEntities) {
+        for (Entity entity : gameEntities) {
             entity.movement();
         }
     }
@@ -112,7 +111,7 @@ public class GameModel extends ObservableModel {
                 break;
         }
 
-        if(entity != null) {
+        if (entity != null) {
             entity.setBounds(Shape.getRandomBound());
             entity.setAngle(Config.RANDOMIZER.apply(FULL_ANGLE));
 
@@ -128,7 +127,7 @@ public class GameModel extends ObservableModel {
     private boolean isOutOfArenaBounds(Entity entity) {
         Shape bound = entity.getShape();
 
-        return  bound.getX() < 0 || Config.ARENA_WIDTH < bound.getX() ||
+        return bound.getX() < 0 || Config.ARENA_WIDTH < bound.getX() ||
                 bound.getY() < 0 || Config.ARENA_HEIGHT < bound.getY();
     }
 

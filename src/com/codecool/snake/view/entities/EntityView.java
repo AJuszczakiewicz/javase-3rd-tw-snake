@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 
 public class EntityView extends Group implements EntityObserver {
 
-    public EntityView(Image costumeForHead){
+    public EntityView(Image costumeForHead) {
         getChildren().add(new ImageView(costumeForHead));
     }
 

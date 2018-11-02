@@ -2,7 +2,7 @@ package com.codecool.snake.controller;
 
 import static com.codecool.snake.common.Config.FRAME_RATE;
 
-public class FrameControlLoop extends Thread implements Runnable {
+public class FrameControlLoop extends Thread {
 
     private Runnable updater;
 
@@ -10,11 +10,11 @@ public class FrameControlLoop extends Thread implements Runnable {
 
     private int tics = 0; //For FPS Debugging
 
-    private long initialTime  = System.currentTimeMillis(), //time for Loop Control
-            startTime  = System.currentTimeMillis(), //initial time for FPS drawing
-            timeFrame = 1000/ FRAME_RATE, //time in milliseconds for one loop;
+    private long initialTime = System.currentTimeMillis(), //time for Loop Control
+            startTime = System.currentTimeMillis(), //initial time for FPS console logging
+            timeFrame = 1000 / FRAME_RATE, //time in milliseconds for one loop;
             timeCounterMs = 0, //milliseconds counter
-            currentTime  = System.currentTimeMillis();
+            currentTime = System.currentTimeMillis();
 
     FrameControlLoop(Runnable updater) {
         this.updater = updater;

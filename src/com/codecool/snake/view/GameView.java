@@ -25,6 +25,7 @@ public class GameView extends Pane implements ModelObserver {
     private Scene scene;
 
     public GameView(Stage primaryStage){
+        primaryStage.setTitle("Snake");
         attachViewToStage(primaryStage);
         loadCostumes();
     }
@@ -53,7 +54,7 @@ public class GameView extends Pane implements ModelObserver {
         Group entity = entitiesOnScene.get(destroyedEntity.toString());
 
         entitiesOnScene.remove(entity);
-        Platform.runLater(()->getChildren().remove(entity));
+        Platform.runLater(() -> getChildren().remove(entity));
     }
 
     private void attachViewToStage(Stage stage){
@@ -63,7 +64,7 @@ public class GameView extends Pane implements ModelObserver {
         stage.show();
     }
 
-    public void attachInputToController(GameController gameController){
+    public void attachInputToController(GameController gameController) {
         scene.setOnKeyPressed(gameController::handleOnKeyPressed);
         scene.setOnKeyReleased(gameController::handleOnKeyReleased);
         scene.getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> gameController.handleOnAppClose());
