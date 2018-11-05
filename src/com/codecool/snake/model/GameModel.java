@@ -12,15 +12,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * Class with creates model of game,
+ * holds entities which are on arena
+ */
 public class GameModel extends ObservableModel {
     private final int FULL_ANGLE = 360;
 
     private List<Entity> gameEntities;
 
+    /**
+     * Creates place holder for new entities
+     */
     public GameModel() {
         gameEntities = new ArrayList<>();
     }
 
+    /**
+     * Populates model with new entities
+     */
     public void firstSpawn() {
         spawnGameObject(GameEntityType.SNAKE);
 
@@ -30,12 +40,20 @@ public class GameModel extends ObservableModel {
         }
     }
 
+    /**
+     * Update model by cleanup arena from death entities,
+     * check if collision exist,
+     * and move all entities
+     */
     public void updateModel() {
         cleanDeathEntities();
         checkForCollision();
         moveAll();
     }
 
+    /**
+     * Cleanup death entities if they exist,
+     */
     private void cleanDeathEntities() {
         ListIterator<Entity> entitiesIterator = gameEntities.listIterator();
         while (entitiesIterator.hasNext()) {
@@ -47,6 +65,10 @@ public class GameModel extends ObservableModel {
         }
     }
 
+    /**
+     *  Check if collision exist,
+     *  Compares Snakes with other entities
+     */
     private void checkForCollision() {
 
         // filter list
@@ -81,6 +103,9 @@ public class GameModel extends ObservableModel {
         }
     }
 
+    /**
+     *  Move all entities
+     */
     private void moveAll() {
 
         for (Entity entity : gameEntities) {
@@ -88,6 +113,13 @@ public class GameModel extends ObservableModel {
         }
     }
 
+    /**
+     * Creates entities based on request,
+     * append them to arena,
+     * and notify about that observators
+     *
+     * @param type - request for entity
+     */
     private void spawnGameObject(GameEntityType type) {
         Entity entity = null;
 
@@ -120,10 +152,21 @@ public class GameModel extends ObservableModel {
         }
     }
 
+    /**
+     * Remove entities from arena and notify about that observers
+     *
+     * @param entityToRemove - Entity based object to remove
+     */
     private void removeGameObject(Entity entityToRemove) {
         notifyAboutDestroy(entityToRemove);
     }
 
+    /**
+     * Check if entity is not in bounds of arena
+     *
+     * @param entity - Entity based object to check
+     * @return - TRUE if is not in bounds, otherwise False
+     */
     private boolean isOutOfArenaBounds(Entity entity) {
         Shape bound = entity.getShape();
 
@@ -131,6 +174,11 @@ public class GameModel extends ObservableModel {
                 bound.getY() < 0 || Config.ARENA_HEIGHT < bound.getY();
     }
 
+    /**
+     * Interprets press event by passing it futher to snakes entities
+     *
+     * @param event - event occured on scene
+     */
     public void interpretPressEvent(KeyEvent event) {
         for (Entity gameEntity : gameEntities)
             if (gameEntity.getEntityType().equals(GameEntityType.SNAKE)) {
@@ -138,6 +186,9 @@ public class GameModel extends ObservableModel {
             }
     }
 
+    /**
+     *  Interprets release event by passing it futher to snakes entities
+     */
     public void interpretReleaseEvent() {
         for (Entity gameEntity : gameEntities)
             if (gameEntity.getEntityType().equals(GameEntityType.SNAKE)) {
