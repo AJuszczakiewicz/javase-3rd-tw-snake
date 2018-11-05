@@ -2,6 +2,10 @@ package com.codecool.snake.controller;
 
 import static com.codecool.snake.common.Config.FRAME_RATE;
 
+/**
+ * This class is for controlling how many frames is generated for second
+ * This is clock for theoretical model, that run selected functions in requested frequency
+ */
 public class FrameControlLoop extends Thread {
 
     private Runnable updater;
@@ -20,6 +24,11 @@ public class FrameControlLoop extends Thread {
         this.updater = updater;
     }
 
+    /**
+     * Run function for starting loop control
+     * checks time between current time and start time, waits for rest ms,
+     * if time between current and start time is greater than time frame, than runs requied command.
+     */
     public void run() {
 
         isRunning = true;
@@ -36,6 +45,7 @@ public class FrameControlLoop extends Thread {
             try {
                 Thread.sleep(timeFrame - timeCounterMs);
             } catch (InterruptedException e) {
+                e.printStackTrace();
             }
             //if statement for FPS loging in console=========
             if (currentTime-startTime>1000){
@@ -48,6 +58,9 @@ public class FrameControlLoop extends Thread {
         }
     }
 
+    /**
+     * function for killing FrameControlLoop
+     */
     void toggleLoopState() {
         isRunning = !isRunning;
     }
